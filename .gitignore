@@ -1,0 +1,20 @@
+
+# Ignore the virtual environment
+venv/
+.venv/
+
+# Environment variables
+.env
+.env.*
+
+
+# Ignore Python cache files
+__pycache__/
+*.pyc
+
+# Ignore the downloaded images and 3D outputs (optional, but recommended)
+street_images/
+3d_outputs/
+
+# Personal Notes
+Notes
