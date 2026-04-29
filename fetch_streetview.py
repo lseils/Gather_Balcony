@@ -46,21 +46,29 @@ if __name__ == "__main__":
     # FACADE-CAPTURE SEQUENCE (WEST-FACING)
     # ==========================================
 
-    path_coordinates =[
-        (33.76433, -84.38209),
-        (33.76443, -84.38209),
-        (33.76453, -84.38209),
-        (33.76463, -84.38209),
+    path_coordinates = [
+    (33.76433, -84.38209),
+    (33.76435, -84.38209),
+    (33.76437, -84.38209),
+    (33.76439, -84.38209),
+    (33.76441, -84.38209),
+    (33.76443, -84.38209),
+    (33.76445, -84.38209),
+    (33.76447, -84.38209),
+    (33.76449, -84.38209),
+    (33.76451, -84.38209),
+    (33.76453, -84.38209),
+    (33.76455, -84.38209),
     ]
 
     # Headings centered on WEST (270) with oblique angles
-    facade_headings =[230, 245, 260, 275, 295]
+    facade_headings = [260, 270, 280]  # tight spread around due-west
 
     # Best settings to avoid street clutter:
     # Pitch ~15 to 25 looks up at the 2nd/3rd story
     # FOV ~50 to 60 zooms past the sidewalk
     OPTIMAL_PITCH = 20 
-    OPTIMAL_FOV = 60
+    OPTIMAL_FOV = 90
 
     image_index = 0
 
