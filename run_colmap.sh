@@ -55,7 +55,7 @@ colmap feature_extractor \
     --database_path "$DB" \
     --image_path "$IMAGE_DIR" \
     --ImageReader.single_camera 1 \
-    --ImageReader.camera_model SIMPLE_PINHOLE \
+    --ImageReader.camera_model OPENCV \
     --SiftExtraction.use_gpu 1 \
     --SiftExtraction.gpu_index $GPU_INDEX \
     --SiftExtraction.num_threads $NUM_THREADS \
@@ -101,7 +101,9 @@ else
     --image_path "$IMAGE_DIR" \
     --output_path "$SPARSE_DIR" \
     --Mapper.num_threads $NUM_THREADS \
-    --Mapper.init_min_tri_angle 1 \
+    --Mapper.init_min_tri_angle 0.5 \
+    --Mapper.tri_min_angle 0.5 \
+    --Mapper.tri_complete_max_reproj_error 4 \
     --Mapper.init_image_id1 1 \
     --Mapper.init_image_id2 7 \
     --Mapper.multiple_models 0 \
