@@ -44,7 +44,7 @@ if [ "$IMAGE_COUNT" -lt 3 ]; then
 fi
 echo "[OK] Found $IMAGE_COUNT images in '$IMAGE_DIR'"
 
-mkdir -p "$SPARSE_DIR/0" "$DENSE_DIR" "$MESH_DIR"
+mkdir -p "$SPARSE_DIR" "$DENSE_DIR" "$MESH_DIR"
 
 # =============================================================================
 # STEP 1: Feature Extraction
@@ -104,8 +104,6 @@ else
     --Mapper.init_min_tri_angle 0.5 \
     --Mapper.tri_min_angle 0.5 \
     --Mapper.tri_complete_max_reproj_error 4 \
-    --Mapper.init_image_id1 1 \
-    --Mapper.init_image_id2 7 \
     --Mapper.multiple_models 0 \
     --Mapper.extract_colors 1 \
     --Mapper.init_num_trials 500
