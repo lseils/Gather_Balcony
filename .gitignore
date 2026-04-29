@@ -18,3 +18,22 @@ street_images/
 
 # Personal Notes
 Notes
+
+# COLMAP workspace (large binary files, reproducible by running the pipeline)
+colmap_workspace/dense/
+colmap_workspace/sparse/
+colmap_workspace/mesh/mesh_delaunay.ply
+colmap_workspace/*.db
+
+# Keep the exported OBJ mesh
+!colmap_workspace/mesh/mesh_cleaned.obj
+!colmap_workspace/mesh/cleaned_cloud.ply
+
+# Python
+*.egg-info/
+dist/
+build/
+
+# OS
+.DS_Store
+Thumbs.db
