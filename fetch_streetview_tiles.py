@@ -51,18 +51,12 @@ METADATA_FILE = "street_images/panorama_metadata.json"
 ZOOM_LEVEL = 3
 
 PATH_COORDINATES = [
-    (33.76433, -84.38206),
-    (33.76435, -84.38206),
-    (33.76437, -84.38206),
-    (33.76439, -84.38206),
-    (33.76441, -84.38206),
-    (33.76443, -84.38206),
-    (33.76445, -84.38206),
-    (33.76447, -84.38206),
-    (33.76449, -84.38206),
-    (33.76451, -84.38206),
-    (33.76453, -84.38206),
-    (33.76455, -84.38206),
+    (33.76433, -84.38210), # Start
+    (33.76450, -84.38210), # ~18 meters away
+    (33.76470, -84.38210), # ~22 meters away
+    (33.76490, -84.38210), # ~22 meters away
+    (33.76510, -84.38210), # Final point
+    (33.7592, -84.3876)
 ]
 
 # =============================================================================
@@ -90,32 +84,39 @@ def get_pano_info(api_key: str, session: str, lat: float, lng: float):
     url = "https://tile.googleapis.com/v1/streetview/panoIds"
     payload = {
         "locations": [{"lat": lat, "lng": lng}],
-        "radius": 50  # meters search radius
+        "radius": 200
     }
+    
+    # Step 1: Get the Pano ID
     r = requests.post(f"{url}?session={session}&key={api_key}", json=payload)
     r.raise_for_status()
     data = r.json()
 
-    if not data.get("panoIds"):
-        return None, None, None
+    if not data.get("panoIds") or data["panoIds"][0] == "":
+        return None
 
     pano_id = data["panoIds"][0]
 
-    # Get metadata for this panoId (real position, heading, dimensions)
-    meta_url = f"https://tile.googleapis.com/v1/streetview/metadata"
-    meta_r = requests.get(
-        meta_url,
-        params={"session": session, "key": api_key, "panoId": pano_id}
-    )
+    # Step 2: Get metadata for this panoId
+    meta_url = "https://tile.googleapis.com/v1/streetview/metadata"
+    # We append parameters to the URL string to ensure the API parses them correctly
+    full_meta_url = f"{meta_url}?session={session}&key={api_key}&panoId={pano_id}"
+
+    meta_r = requests.get(full_meta_url)
     meta_r.raise_for_status()
     meta = meta_r.json()
 
-    real_lat = meta["location"]["lat"]
-    real_lng = meta["location"]["lng"]
-    heading  = meta.get("heading", 0)  # compass heading camera is facing
+    # Step 3: Extract flattened keys (lat, lng, heading) directly from the meta dict
+    if "lat" not in meta or "lng" not in meta:
+        print(f"DEBUG: Pano ID {pano_id} found but missing coordinate keys.")
+        return None
+    
+    real_lat = meta.get("lat")
+    real_lng = meta.get("lng")
+    heading  = meta.get("heading", 0)
 
+    # Return the data so the main loop can start download_and_stitch
     return pano_id, real_lat, real_lng, heading, meta
-
 
 # =============================================================================
 # STEP 3 & 4: Download tiles and stitch into equirectangular panorama
@@ -165,6 +166,7 @@ def main():
     Path(OUTPUT_FOLDER).mkdir(exist_ok=True)
 
     session = get_session_token(API_KEY)
+    print(f"DEBUG: My actual session token is: {session}") # Add this!
 
     seen_panos = set()
     image_index = 0
@@ -174,10 +176,13 @@ def main():
 
     for lat, lng in PATH_COORDINATES:
         result = get_pano_info(API_KEY, session, lat, lng)
-        if result[0] is None:
+        
+        # FIX: Check if result is None first
+        if result is None:
             print(f"  No panorama found at ({lat}, {lng}), skipping.")
             continue
 
+        # Now it is safe to unpack because we know result is a tuple
         pano_id, real_lat, real_lng, heading, meta = result
 
         if pano_id in seen_panos:
