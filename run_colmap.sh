@@ -55,7 +55,7 @@ colmap feature_extractor \
     --database_path "$DB" \
     --image_path "$IMAGE_DIR" \
     --ImageReader.single_camera 1 \
-    --ImageReader.camera_model OPENCV \
+    --ImageReader.camera_model PINHOLE \
     --SiftExtraction.use_gpu 1 \
     --SiftExtraction.gpu_index $GPU_INDEX \
     --SiftExtraction.num_threads $NUM_THREADS \
@@ -84,19 +84,8 @@ colmap exhaustive_matcher \
 echo ""
 echo "[3/6] Running sparse reconstruction (SfM)..."
 
-if [ -f "$SPARSE_DIR/0/cameras.txt" ]; then
-    echo "  Found pose priors — using known camera positions as initialization..."
-    colmap point_triangulator \
-        --database_path "$DB" \
-        --image_path "$IMAGE_DIR" \
-        --input_path "$SPARSE_DIR/0" \
-        --output_path "$SPARSE_DIR/0" \
-        --Mapper.num_threads $NUM_THREADS \
-        --Mapper.tri_min_angle 4
-else
-    echo "  No pose priors found — running full SfM mapper..."
-    echo "  Tip: Run generate_colmap_poses.py first for better results"
-    colmap mapper \
+echo "[3/6] Running sparse reconstruction (SfM)..."
+colmap mapper \
     --database_path "$DB" \
     --image_path "$IMAGE_DIR" \
     --output_path "$SPARSE_DIR" \
@@ -107,7 +96,6 @@ else
     --Mapper.multiple_models 0 \
     --Mapper.extract_colors 1 \
     --Mapper.init_num_trials 500
-fi
 
 echo "[OK] Sparse model ready"
 
@@ -141,7 +129,8 @@ colmap patch_match_stereo \
     --PatchMatchStereo.window_radius 5 \
     --PatchMatchStereo.num_samples 15 \
     --PatchMatchStereo.num_iterations 5 \
-    --PatchMatchStereo.geom_consistency true
+    --PatchMatchStereo.geom_consistency true \
+    --PatchMatchStereo.filter true
 
 # =============================================================================
 # STEP 5: Stereo Fusion → Dense Point Cloud
@@ -154,7 +143,11 @@ colmap stereo_fusion \
     --input_type geometric \
     --output_path "$DENSE_DIR/fused.ply" \
     --StereoFusion.num_threads $NUM_THREADS \
-    --StereoFusion.min_num_pixels 3
+    --StereoFusion.min_num_pixels 1 \
+    --StereoFusion.max_reproj_error 4 \
+    --StereoFusion.max_depth_error 0.05 \
+    --StereoFusion.max_normal_error 30
+
 
 echo "[OK] Dense point cloud: $DENSE_DIR/fused.ply"
 

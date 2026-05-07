@@ -43,7 +43,7 @@ if not API_KEY:
 # CONFIG
 # =============================================================================
 OUTPUT_FOLDER = "street_images"
-METADATA_FILE = "street_images/panorama_metadata.json"
+METADATA_FILE = "panorama_metadata.json"
 
 # Zoom level 3 = 4x2 tiles = good balance of resolution and download size
 # Each tile is 512x512px, so full panorama = 2048x1024px
@@ -118,30 +118,35 @@ def get_pano_info(api_key: str, session: str, lat: float, lng: float):
     return pano_id, real_lat, real_lng, heading, meta
 
 # =============================================================================
-# STEP 3 & 4: Download tiles and stitch into equirectangular panorama
+# STEP 3 & 4: Download tiles and DO NOT STITCH — instead, save them separately as perspective crops
 # =============================================================================
-def download_and_stitch(api_key: str, session: str, pano_id: str, zoom: int) -> Image.Image:
+def download_tiles_separately(api_key: str, session: str, pano_id: str, 
+                               zoom: int, output_folder: str, image_index: int):
     """
-    Downloads all tiles for a panorama at the given zoom level and stitches
-    them into a single equirectangular image.
-
-    At zoom level Z:
-      - num_x_tiles = 2^Z
-      - num_y_tiles = 2^(Z-1)
-    Each tile is 512x512px.
+    Downloads tiles individually as perspective crops instead of stitching
+    into equirectangular. Each tile is a valid gnomonic (perspective) image
+    that COLMAP can process natively with a pinhole camera model.
+    
+    At zoom 3: 8x4 = 32 tiles per panorama
+    At zoom 4: 16x8 = 128 tiles per panorama (overkill)
+    
+    We only save the tiles facing the facade (center columns) to avoid
+    giving COLMAP sky, ground, and behind-camera tiles.
     """
     num_x = 2 ** zoom
     num_y = 2 ** (zoom - 1)
-    tile_size = 512
 
-    full_width  = num_x * tile_size
-    full_height = num_y * tile_size
-    panorama = Image.new("RGB", (full_width, full_height))
+    saved = []
 
-    print(f"    Downloading {num_x}x{num_y} tiles ({full_width}x{full_height}px)...")
+    # Only grab horizontally centered tiles facing the facade heading
+    # For a facade-facing shot, the center 3 columns out of num_x are enough
+    # and vertically skip the top/bottom rows (sky and ground)
+    x_center = num_x // 2
+    x_range = range(max(0, x_center - 1), min(num_x, x_center + 2))  # 3 columns
+    y_range = range(1, num_y - 1)  # skip top and bottom rows
 
-    for y in range(num_y):
-        for x in range(num_x):
+    for y in y_range:
+        for x in x_range:
             tile_url = (
                 f"https://tile.googleapis.com/v1/streetview/tiles"
                 f"/{zoom}/{x}/{y}"
@@ -152,10 +157,20 @@ def download_and_stitch(api_key: str, session: str, pano_id: str, zoom: int) -> 
                 print(f"    [WARN] Tile {x},{y} failed: {r.status_code}")
                 continue
 
-            tile_img = Image.open(io.BytesIO(r.content))
-            panorama.paste(tile_img, (x * tile_size, y * tile_size))
+            fname = f"facade_{image_index:03d}_tile_{x}_{y}.jpg"
+            fpath = os.path.join(output_folder, fname)
+            with open(fpath, "wb") as f:
+                f.write(r.content)
 
-    return panorama
+            saved.append({
+                "image_name": fname,
+                "pano_index": image_index,
+                "tile_x": x,
+                "tile_y": y,
+                "zoom": zoom,
+            })
+
+    return saved
 
 
 # =============================================================================
@@ -165,7 +180,6 @@ def main():
     Path(OUTPUT_FOLDER).mkdir(exist_ok=True)
 
     session = get_session_token(API_KEY)
-    print(f"DEBUG: My actual session token is: {session}") # Add this!
 
     seen_panos = set()
     image_index = 0
@@ -175,13 +189,11 @@ def main():
 
     for lat, lng in PATH_COORDINATES:
         result = get_pano_info(API_KEY, session, lat, lng)
-        
-        # FIX: Check if result is None first
+
         if result is None:
             print(f"  No panorama found at ({lat}, {lng}), skipping.")
             continue
 
-        # Now it is safe to unpack because we know result is a tuple
         pano_id, real_lat, real_lng, heading, meta = result
 
         if pano_id in seen_panos:
@@ -189,41 +201,41 @@ def main():
             continue
 
         seen_panos.add(pano_id)
-        fname = f"facade_{image_index:03d}.jpg"
-        fpath = os.path.join(OUTPUT_FOLDER, fname)
 
         print(f"\n  [{image_index}] panoId={pano_id[:12]}... @ ({real_lat:.5f}, {real_lng:.5f})")
 
-        panorama = download_and_stitch(API_KEY, session, pano_id, ZOOM_LEVEL)
-        panorama.save(fpath, "JPEG", quality=95)
-        print(f"    Saved: {fname}")
+        # FIX 1: pass output_folder and image_index
+        tiles = download_tiles_separately(
+            API_KEY, session, pano_id, ZOOM_LEVEL, OUTPUT_FOLDER, image_index
+        )
+        print(f"    Saved {len(tiles)} tiles")
 
-        # Store metadata for COLMAP pose priors
-        all_metadata.append({
-            "image_name": fname,
-            "image_index": image_index,
-            "pano_id": pano_id,
-            "lat": real_lat,
-            "lng": real_lng,
-            "heading": heading,
-            "image_width": panorama.width,
-            "image_height": panorama.height,
-        })
+        # FIX 2: metadata per tile, not per panorama
+        for tile in tiles:
+            all_metadata.append({
+                "image_name":  tile["image_name"],
+                "pano_index":  tile["pano_index"],
+                "tile_x":      tile["tile_x"],
+                "tile_y":      tile["tile_y"],
+                "zoom":        tile["zoom"],
+                "pano_id":     pano_id,
+                "lat":         real_lat,
+                "lng":         real_lng,
+                "heading":     heading,
+            })
 
         image_index += 1
 
-    # Save metadata JSON for generate_colmap_poses.py to use
     with open(METADATA_FILE, "w") as f:
         json.dump(all_metadata, f, indent=2)
 
+    total_tiles = len(all_metadata)
     print(f"\n{'='*50}")
-    print(f"  Done! Downloaded {image_index} unique panoramas.")
+    print(f"  Done! {image_index} panoramas → {total_tiles} tiles saved.")
     print(f"  Metadata saved to: {METADATA_FILE}")
     print(f"\n  Next steps:")
-    print(f"    python generate_colmap_poses.py   # uses metadata for pose priors")
     print(f"    ./run_colmap.sh")
     print(f"{'='*50}")
-
 
 if __name__ == "__main__":
     main()
