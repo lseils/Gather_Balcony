@@ -90,16 +90,15 @@ colmap mapper \
     --image_path "$IMAGE_DIR" \
     --output_path "$SPARSE_DIR" \
     --Mapper.num_threads $NUM_THREADS \
-    --Mapper.init_min_tri_angle 0.5 \
     --Mapper.tri_min_angle 0.5 \
-    --Mapper.tri_complete_max_reproj_error 4 \
-    --Mapper.init_min_num_inliers 10 \
-    --Mapper.abs_pose_min_num_inliers 10 \
+    --Mapper.tri_complete_max_reproj_error 8 \
+    --Mapper.init_min_num_inliers 5 \
+    --Mapper.abs_pose_min_num_inliers 5 \
     --Mapper.abs_pose_min_inlier_ratio 0.1 \
     --Mapper.max_reg_trials 5 \
     --Mapper.multiple_models 0 \
-    --Mapper.extract_colors 1 \
     --Mapper.init_num_trials 1000
+    
 
 echo "[OK] Sparse model ready"
 

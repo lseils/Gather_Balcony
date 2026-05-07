@@ -123,28 +123,18 @@ def get_pano_info(api_key: str, session: str, lat: float, lng: float):
 # =============================================================================
 def download_tiles_separately(api_key: str, session: str, pano_id: str,
                                zoom: int, output_folder: str, image_index: int,
-                               heading: float, facade_bearing: float = 270.0):
+                               heading: float, facade_bearing: float = 90.0):
     """
-    Downloads tiles facing the facade instead of stitching into equirectangular.
+    Downloads tiles facing the residential facade (west side of street).
     Each tile is a gnomonic (perspective) image suitable for COLMAP PINHOLE model.
 
-    facade_bearing: compass bearing FROM camera TO facade (270 = west)
+    Tile column 5 at zoom 4 confirmed to face the residential building.
     """
     num_x = 2 ** zoom
     num_y = 2 ** (zoom - 1)
-    deg_per_tile = 360.0 / num_x
 
-    # Which tile column faces the facade?
-    relative = (facade_bearing - heading) % 360
-    x_center = round(relative / deg_per_tile) % num_x
-    x_range = [
-    (x_center - 2) % num_x,
-    (x_center - 1) % num_x,
-    x_center % num_x,
-    (x_center + 1) % num_x,
-    (x_center + 2) % num_x,
-    ]
-    y_range = range(1, num_y - 1)  # skip top (sky) and bottom (ground) rows
+    x_range = [3, 4, 5, 6, 7]   # confirmed west-facing columns
+    y_range = range(1, 5)  # rows 1-3: upper building, skip road and sky extremes
 
     saved = []
     for y in y_range:

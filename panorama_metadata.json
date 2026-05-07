@@ -1,8 +1,8 @@
 [
   {
-    "image_name": "facade_000_tile_9_1.jpg",
+    "image_name": "facade_000_tile_3_1.jpg",
     "pano_index": 0,
-    "tile_x": 9,
+    "tile_x": 3,
     "tile_y": 1,
     "zoom": 4,
     "pano_id": "w0mWic_nByqDPtbO4zxsoQ",
@@ -11,9 +11,9 @@
     "heading": 20.091871
   },
   {
-    "image_name": "facade_000_tile_10_1.jpg",
+    "image_name": "facade_000_tile_4_1.jpg",
     "pano_index": 0,
-    "tile_x": 10,
+    "tile_x": 4,
     "tile_y": 1,
     "zoom": 4,
     "pano_id": "w0mWic_nByqDPtbO4zxsoQ",
@@ -22,9 +22,9 @@
     "heading": 20.091871
   },
   {
-    "image_name": "facade_000_tile_11_1.jpg",
+    "image_name": "facade_000_tile_5_1.jpg",
     "pano_index": 0,
-    "tile_x": 11,
+    "tile_x": 5,
     "tile_y": 1,
     "zoom": 4,
     "pano_id": "w0mWic_nByqDPtbO4zxsoQ",
@@ -33,9 +33,9 @@
     "heading": 20.091871
   },
   {
-    "image_name": "facade_000_tile_12_1.jpg",
+    "image_name": "facade_000_tile_6_1.jpg",
     "pano_index": 0,
-    "tile_x": 12,
+    "tile_x": 6,
     "tile_y": 1,
     "zoom": 4,
     "pano_id": "w0mWic_nByqDPtbO4zxsoQ",
@@ -44,9 +44,9 @@
     "heading": 20.091871
   },
   {
-    "image_name": "facade_000_tile_13_1.jpg",
+    "image_name": "facade_000_tile_7_1.jpg",
     "pano_index": 0,
-    "tile_x": 13,
+    "tile_x": 7,
     "tile_y": 1,
     "zoom": 4,
     "pano_id": "w0mWic_nByqDPtbO4zxsoQ",
@@ -55,9 +55,9 @@
     "heading": 20.091871
   },
   {
-    "image_name": "facade_000_tile_9_2.jpg",
+    "image_name": "facade_000_tile_3_2.jpg",
     "pano_index": 0,
-    "tile_x": 9,
+    "tile_x": 3,
     "tile_y": 2,
     "zoom": 4,
     "pano_id": "w0mWic_nByqDPtbO4zxsoQ",
@@ -66,9 +66,9 @@
     "heading": 20.091871
   },
   {
-    "image_name": "facade_000_tile_10_2.jpg",
+    "image_name": "facade_000_tile_4_2.jpg",
     "pano_index": 0,
-    "tile_x": 10,
+    "tile_x": 4,
     "tile_y": 2,
     "zoom": 4,
     "pano_id": "w0mWic_nByqDPtbO4zxsoQ",
@@ -77,9 +77,9 @@
     "heading": 20.091871
   },
   {
-    "image_name": "facade_000_tile_11_2.jpg",
+    "image_name": "facade_000_tile_5_2.jpg",
     "pano_index": 0,
-    "tile_x": 11,
+    "tile_x": 5,
     "tile_y": 2,
     "zoom": 4,
     "pano_id": "w0mWic_nByqDPtbO4zxsoQ",
@@ -88,9 +88,9 @@
     "heading": 20.091871
   },
   {
-    "image_name": "facade_000_tile_12_2.jpg",
+    "image_name": "facade_000_tile_6_2.jpg",
     "pano_index": 0,
-    "tile_x": 12,
+    "tile_x": 6,
     "tile_y": 2,
     "zoom": 4,
     "pano_id": "w0mWic_nByqDPtbO4zxsoQ",
@@ -99,9 +99,9 @@
     "heading": 20.091871
   },
   {
-    "image_name": "facade_000_tile_13_2.jpg",
+    "image_name": "facade_000_tile_7_2.jpg",
     "pano_index": 0,
-    "tile_x": 13,
+    "tile_x": 7,
     "tile_y": 2,
     "zoom": 4,
     "pano_id": "w0mWic_nByqDPtbO4zxsoQ",
@@ -110,9 +110,9 @@
     "heading": 20.091871
   },
   {
-    "image_name": "facade_000_tile_9_3.jpg",
+    "image_name": "facade_000_tile_3_3.jpg",
     "pano_index": 0,
-    "tile_x": 9,
+    "tile_x": 3,
     "tile_y": 3,
     "zoom": 4,
     "pano_id": "w0mWic_nByqDPtbO4zxsoQ",
@@ -121,9 +121,9 @@
     "heading": 20.091871
   },
   {
-    "image_name": "facade_000_tile_10_3.jpg",
+    "image_name": "facade_000_tile_4_3.jpg",
     "pano_index": 0,
-    "tile_x": 10,
+    "tile_x": 4,
     "tile_y": 3,
     "zoom": 4,
     "pano_id": "w0mWic_nByqDPtbO4zxsoQ",
@@ -132,9 +132,9 @@
     "heading": 20.091871
   },
   {
-    "image_name": "facade_000_tile_11_3.jpg",
+    "image_name": "facade_000_tile_5_3.jpg",
     "pano_index": 0,
-    "tile_x": 11,
+    "tile_x": 5,
     "tile_y": 3,
     "zoom": 4,
     "pano_id": "w0mWic_nByqDPtbO4zxsoQ",
@@ -143,9 +143,9 @@
     "heading": 20.091871
   },
   {
-    "image_name": "facade_000_tile_12_3.jpg",
+    "image_name": "facade_000_tile_6_3.jpg",
     "pano_index": 0,
-    "tile_x": 12,
+    "tile_x": 6,
     "tile_y": 3,
     "zoom": 4,
     "pano_id": "w0mWic_nByqDPtbO4zxsoQ",
@@ -154,9 +154,9 @@
     "heading": 20.091871
   },
   {
-    "image_name": "facade_000_tile_13_3.jpg",
+    "image_name": "facade_000_tile_7_3.jpg",
     "pano_index": 0,
-    "tile_x": 13,
+    "tile_x": 7,
     "tile_y": 3,
     "zoom": 4,
     "pano_id": "w0mWic_nByqDPtbO4zxsoQ",
@@ -165,9 +165,9 @@
     "heading": 20.091871
   },
   {
-    "image_name": "facade_000_tile_9_4.jpg",
+    "image_name": "facade_000_tile_3_4.jpg",
     "pano_index": 0,
-    "tile_x": 9,
+    "tile_x": 3,
     "tile_y": 4,
     "zoom": 4,
     "pano_id": "w0mWic_nByqDPtbO4zxsoQ",
@@ -176,9 +176,9 @@
     "heading": 20.091871
   },
   {
-    "image_name": "facade_000_tile_10_4.jpg",
+    "image_name": "facade_000_tile_4_4.jpg",
     "pano_index": 0,
-    "tile_x": 10,
+    "tile_x": 4,
     "tile_y": 4,
     "zoom": 4,
     "pano_id": "w0mWic_nByqDPtbO4zxsoQ",
@@ -187,9 +187,9 @@
     "heading": 20.091871
   },
   {
-    "image_name": "facade_000_tile_11_4.jpg",
+    "image_name": "facade_000_tile_5_4.jpg",
     "pano_index": 0,
-    "tile_x": 11,
+    "tile_x": 5,
     "tile_y": 4,
     "zoom": 4,
     "pano_id": "w0mWic_nByqDPtbO4zxsoQ",
@@ -198,9 +198,9 @@
     "heading": 20.091871
   },
   {
-    "image_name": "facade_000_tile_12_4.jpg",
+    "image_name": "facade_000_tile_6_4.jpg",
     "pano_index": 0,
-    "tile_x": 12,
+    "tile_x": 6,
     "tile_y": 4,
     "zoom": 4,
     "pano_id": "w0mWic_nByqDPtbO4zxsoQ",
@@ -209,9 +209,9 @@
     "heading": 20.091871
   },
   {
-    "image_name": "facade_000_tile_13_4.jpg",
+    "image_name": "facade_000_tile_7_4.jpg",
     "pano_index": 0,
-    "tile_x": 13,
+    "tile_x": 7,
     "tile_y": 4,
     "zoom": 4,
     "pano_id": "w0mWic_nByqDPtbO4zxsoQ",
@@ -220,119 +220,9 @@
     "heading": 20.091871
   },
   {
-    "image_name": "facade_000_tile_9_5.jpg",
-    "pano_index": 0,
-    "tile_x": 9,
-    "tile_y": 5,
-    "zoom": 4,
-    "pano_id": "w0mWic_nByqDPtbO4zxsoQ",
-    "lat": 33.76429268885186,
-    "lng": -84.38208141199576,
-    "heading": 20.091871
-  },
-  {
-    "image_name": "facade_000_tile_10_5.jpg",
-    "pano_index": 0,
-    "tile_x": 10,
-    "tile_y": 5,
-    "zoom": 4,
-    "pano_id": "w0mWic_nByqDPtbO4zxsoQ",
-    "lat": 33.76429268885186,
-    "lng": -84.38208141199576,
-    "heading": 20.091871
-  },
-  {
-    "image_name": "facade_000_tile_11_5.jpg",
-    "pano_index": 0,
-    "tile_x": 11,
-    "tile_y": 5,
-    "zoom": 4,
-    "pano_id": "w0mWic_nByqDPtbO4zxsoQ",
-    "lat": 33.76429268885186,
-    "lng": -84.38208141199576,
-    "heading": 20.091871
-  },
-  {
-    "image_name": "facade_000_tile_12_5.jpg",
-    "pano_index": 0,
-    "tile_x": 12,
-    "tile_y": 5,
-    "zoom": 4,
-    "pano_id": "w0mWic_nByqDPtbO4zxsoQ",
-    "lat": 33.76429268885186,
-    "lng": -84.38208141199576,
-    "heading": 20.091871
-  },
-  {
-    "image_name": "facade_000_tile_13_5.jpg",
-    "pano_index": 0,
-    "tile_x": 13,
-    "tile_y": 5,
-    "zoom": 4,
-    "pano_id": "w0mWic_nByqDPtbO4zxsoQ",
-    "lat": 33.76429268885186,
-    "lng": -84.38208141199576,
-    "heading": 20.091871
-  },
-  {
-    "image_name": "facade_000_tile_9_6.jpg",
-    "pano_index": 0,
-    "tile_x": 9,
-    "tile_y": 6,
-    "zoom": 4,
-    "pano_id": "w0mWic_nByqDPtbO4zxsoQ",
-    "lat": 33.76429268885186,
-    "lng": -84.38208141199576,
-    "heading": 20.091871
-  },
-  {
-    "image_name": "facade_000_tile_10_6.jpg",
-    "pano_index": 0,
-    "tile_x": 10,
-    "tile_y": 6,
-    "zoom": 4,
-    "pano_id": "w0mWic_nByqDPtbO4zxsoQ",
-    "lat": 33.76429268885186,
-    "lng": -84.38208141199576,
-    "heading": 20.091871
-  },
-  {
-    "image_name": "facade_000_tile_11_6.jpg",
-    "pano_index": 0,
-    "tile_x": 11,
-    "tile_y": 6,
-    "zoom": 4,
-    "pano_id": "w0mWic_nByqDPtbO4zxsoQ",
-    "lat": 33.76429268885186,
-    "lng": -84.38208141199576,
-    "heading": 20.091871
-  },
-  {
-    "image_name": "facade_000_tile_12_6.jpg",
-    "pano_index": 0,
-    "tile_x": 12,
-    "tile_y": 6,
-    "zoom": 4,
-    "pano_id": "w0mWic_nByqDPtbO4zxsoQ",
-    "lat": 33.76429268885186,
-    "lng": -84.38208141199576,
-    "heading": 20.091871
-  },
-  {
-    "image_name": "facade_000_tile_13_6.jpg",
-    "pano_index": 0,
-    "tile_x": 13,
-    "tile_y": 6,
-    "zoom": 4,
-    "pano_id": "w0mWic_nByqDPtbO4zxsoQ",
-    "lat": 33.76429268885186,
-    "lng": -84.38208141199576,
-    "heading": 20.091871
-  },
-  {
-    "image_name": "facade_001_tile_10_1.jpg",
+    "image_name": "facade_001_tile_3_1.jpg",
     "pano_index": 1,
-    "tile_x": 10,
+    "tile_x": 3,
     "tile_y": 1,
     "zoom": 4,
     "pano_id": "6OV8hu_cxy_wljahpoNZLA",
@@ -341,9 +231,9 @@
     "heading": 1.3979982
   },
   {
-    "image_name": "facade_001_tile_11_1.jpg",
+    "image_name": "facade_001_tile_4_1.jpg",
     "pano_index": 1,
-    "tile_x": 11,
+    "tile_x": 4,
     "tile_y": 1,
     "zoom": 4,
     "pano_id": "6OV8hu_cxy_wljahpoNZLA",
@@ -352,9 +242,9 @@
     "heading": 1.3979982
   },
   {
-    "image_name": "facade_001_tile_12_1.jpg",
+    "image_name": "facade_001_tile_5_1.jpg",
     "pano_index": 1,
-    "tile_x": 12,
+    "tile_x": 5,
     "tile_y": 1,
     "zoom": 4,
     "pano_id": "6OV8hu_cxy_wljahpoNZLA",
@@ -363,9 +253,9 @@
     "heading": 1.3979982
   },
   {
-    "image_name": "facade_001_tile_13_1.jpg",
+    "image_name": "facade_001_tile_6_1.jpg",
     "pano_index": 1,
-    "tile_x": 13,
+    "tile_x": 6,
     "tile_y": 1,
     "zoom": 4,
     "pano_id": "6OV8hu_cxy_wljahpoNZLA",
@@ -374,9 +264,9 @@
     "heading": 1.3979982
   },
   {
-    "image_name": "facade_001_tile_14_1.jpg",
+    "image_name": "facade_001_tile_7_1.jpg",
     "pano_index": 1,
-    "tile_x": 14,
+    "tile_x": 7,
     "tile_y": 1,
     "zoom": 4,
     "pano_id": "6OV8hu_cxy_wljahpoNZLA",
@@ -385,9 +275,9 @@
     "heading": 1.3979982
   },
   {
-    "image_name": "facade_001_tile_10_2.jpg",
+    "image_name": "facade_001_tile_3_2.jpg",
     "pano_index": 1,
-    "tile_x": 10,
+    "tile_x": 3,
     "tile_y": 2,
     "zoom": 4,
     "pano_id": "6OV8hu_cxy_wljahpoNZLA",
@@ -396,9 +286,9 @@
     "heading": 1.3979982
   },
   {
-    "image_name": "facade_001_tile_11_2.jpg",
+    "image_name": "facade_001_tile_4_2.jpg",
     "pano_index": 1,
-    "tile_x": 11,
+    "tile_x": 4,
     "tile_y": 2,
     "zoom": 4,
     "pano_id": "6OV8hu_cxy_wljahpoNZLA",
@@ -407,9 +297,9 @@
     "heading": 1.3979982
   },
   {
-    "image_name": "facade_001_tile_12_2.jpg",
+    "image_name": "facade_001_tile_5_2.jpg",
     "pano_index": 1,
-    "tile_x": 12,
+    "tile_x": 5,
     "tile_y": 2,
     "zoom": 4,
     "pano_id": "6OV8hu_cxy_wljahpoNZLA",
@@ -418,9 +308,9 @@
     "heading": 1.3979982
   },
   {
-    "image_name": "facade_001_tile_13_2.jpg",
+    "image_name": "facade_001_tile_6_2.jpg",
     "pano_index": 1,
-    "tile_x": 13,
+    "tile_x": 6,
     "tile_y": 2,
     "zoom": 4,
     "pano_id": "6OV8hu_cxy_wljahpoNZLA",
@@ -429,9 +319,9 @@
     "heading": 1.3979982
   },
   {
-    "image_name": "facade_001_tile_14_2.jpg",
+    "image_name": "facade_001_tile_7_2.jpg",
     "pano_index": 1,
-    "tile_x": 14,
+    "tile_x": 7,
     "tile_y": 2,
     "zoom": 4,
     "pano_id": "6OV8hu_cxy_wljahpoNZLA",
@@ -440,9 +330,9 @@
     "heading": 1.3979982
   },
   {
-    "image_name": "facade_001_tile_10_3.jpg",
+    "image_name": "facade_001_tile_3_3.jpg",
     "pano_index": 1,
-    "tile_x": 10,
+    "tile_x": 3,
     "tile_y": 3,
     "zoom": 4,
     "pano_id": "6OV8hu_cxy_wljahpoNZLA",
@@ -451,9 +341,9 @@
     "heading": 1.3979982
   },
   {
-    "image_name": "facade_001_tile_11_3.jpg",
+    "image_name": "facade_001_tile_4_3.jpg",
     "pano_index": 1,
-    "tile_x": 11,
+    "tile_x": 4,
     "tile_y": 3,
     "zoom": 4,
     "pano_id": "6OV8hu_cxy_wljahpoNZLA",
@@ -462,9 +352,9 @@
     "heading": 1.3979982
   },
   {
-    "image_name": "facade_001_tile_12_3.jpg",
+    "image_name": "facade_001_tile_5_3.jpg",
     "pano_index": 1,
-    "tile_x": 12,
+    "tile_x": 5,
     "tile_y": 3,
     "zoom": 4,
     "pano_id": "6OV8hu_cxy_wljahpoNZLA",
@@ -473,9 +363,9 @@
     "heading": 1.3979982
   },
   {
-    "image_name": "facade_001_tile_13_3.jpg",
+    "image_name": "facade_001_tile_6_3.jpg",
     "pano_index": 1,
-    "tile_x": 13,
+    "tile_x": 6,
     "tile_y": 3,
     "zoom": 4,
     "pano_id": "6OV8hu_cxy_wljahpoNZLA",
@@ -484,9 +374,9 @@
     "heading": 1.3979982
   },
   {
-    "image_name": "facade_001_tile_14_3.jpg",
+    "image_name": "facade_001_tile_7_3.jpg",
     "pano_index": 1,
-    "tile_x": 14,
+    "tile_x": 7,
     "tile_y": 3,
     "zoom": 4,
     "pano_id": "6OV8hu_cxy_wljahpoNZLA",
@@ -495,9 +385,9 @@
     "heading": 1.3979982
   },
   {
-    "image_name": "facade_001_tile_10_4.jpg",
+    "image_name": "facade_001_tile_3_4.jpg",
     "pano_index": 1,
-    "tile_x": 10,
+    "tile_x": 3,
     "tile_y": 4,
     "zoom": 4,
     "pano_id": "6OV8hu_cxy_wljahpoNZLA",
@@ -506,9 +396,9 @@
     "heading": 1.3979982
   },
   {
-    "image_name": "facade_001_tile_11_4.jpg",
+    "image_name": "facade_001_tile_4_4.jpg",
     "pano_index": 1,
-    "tile_x": 11,
+    "tile_x": 4,
     "tile_y": 4,
     "zoom": 4,
     "pano_id": "6OV8hu_cxy_wljahpoNZLA",
@@ -517,9 +407,9 @@
     "heading": 1.3979982
   },
   {
-    "image_name": "facade_001_tile_12_4.jpg",
+    "image_name": "facade_001_tile_5_4.jpg",
     "pano_index": 1,
-    "tile_x": 12,
+    "tile_x": 5,
     "tile_y": 4,
     "zoom": 4,
     "pano_id": "6OV8hu_cxy_wljahpoNZLA",
@@ -528,9 +418,9 @@
     "heading": 1.3979982
   },
   {
-    "image_name": "facade_001_tile_13_4.jpg",
+    "image_name": "facade_001_tile_6_4.jpg",
     "pano_index": 1,
-    "tile_x": 13,
+    "tile_x": 6,
     "tile_y": 4,
     "zoom": 4,
     "pano_id": "6OV8hu_cxy_wljahpoNZLA",
@@ -539,9 +429,9 @@
     "heading": 1.3979982
   },
   {
-    "image_name": "facade_001_tile_14_4.jpg",
+    "image_name": "facade_001_tile_7_4.jpg",
     "pano_index": 1,
-    "tile_x": 14,
+    "tile_x": 7,
     "tile_y": 4,
     "zoom": 4,
     "pano_id": "6OV8hu_cxy_wljahpoNZLA",
@@ -550,119 +440,9 @@
     "heading": 1.3979982
   },
   {
-    "image_name": "facade_001_tile_10_5.jpg",
-    "pano_index": 1,
-    "tile_x": 10,
-    "tile_y": 5,
-    "zoom": 4,
-    "pano_id": "6OV8hu_cxy_wljahpoNZLA",
-    "lat": 33.7644907350394,
-    "lng": -84.3820770816271,
-    "heading": 1.3979982
-  },
-  {
-    "image_name": "facade_001_tile_11_5.jpg",
-    "pano_index": 1,
-    "tile_x": 11,
-    "tile_y": 5,
-    "zoom": 4,
-    "pano_id": "6OV8hu_cxy_wljahpoNZLA",
-    "lat": 33.7644907350394,
-    "lng": -84.3820770816271,
-    "heading": 1.3979982
-  },
-  {
-    "image_name": "facade_001_tile_12_5.jpg",
-    "pano_index": 1,
-    "tile_x": 12,
-    "tile_y": 5,
-    "zoom": 4,
-    "pano_id": "6OV8hu_cxy_wljahpoNZLA",
-    "lat": 33.7644907350394,
-    "lng": -84.3820770816271,
-    "heading": 1.3979982
-  },
-  {
-    "image_name": "facade_001_tile_13_5.jpg",
-    "pano_index": 1,
-    "tile_x": 13,
-    "tile_y": 5,
-    "zoom": 4,
-    "pano_id": "6OV8hu_cxy_wljahpoNZLA",
-    "lat": 33.7644907350394,
-    "lng": -84.3820770816271,
-    "heading": 1.3979982
-  },
-  {
-    "image_name": "facade_001_tile_14_5.jpg",
-    "pano_index": 1,
-    "tile_x": 14,
-    "tile_y": 5,
-    "zoom": 4,
-    "pano_id": "6OV8hu_cxy_wljahpoNZLA",
-    "lat": 33.7644907350394,
-    "lng": -84.3820770816271,
-    "heading": 1.3979982
-  },
-  {
-    "image_name": "facade_001_tile_10_6.jpg",
-    "pano_index": 1,
-    "tile_x": 10,
-    "tile_y": 6,
-    "zoom": 4,
-    "pano_id": "6OV8hu_cxy_wljahpoNZLA",
-    "lat": 33.7644907350394,
-    "lng": -84.3820770816271,
-    "heading": 1.3979982
-  },
-  {
-    "image_name": "facade_001_tile_11_6.jpg",
-    "pano_index": 1,
-    "tile_x": 11,
-    "tile_y": 6,
-    "zoom": 4,
-    "pano_id": "6OV8hu_cxy_wljahpoNZLA",
-    "lat": 33.7644907350394,
-    "lng": -84.3820770816271,
-    "heading": 1.3979982
-  },
-  {
-    "image_name": "facade_001_tile_12_6.jpg",
-    "pano_index": 1,
-    "tile_x": 12,
-    "tile_y": 6,
-    "zoom": 4,
-    "pano_id": "6OV8hu_cxy_wljahpoNZLA",
-    "lat": 33.7644907350394,
-    "lng": -84.3820770816271,
-    "heading": 1.3979982
-  },
-  {
-    "image_name": "facade_001_tile_13_6.jpg",
-    "pano_index": 1,
-    "tile_x": 13,
-    "tile_y": 6,
-    "zoom": 4,
-    "pano_id": "6OV8hu_cxy_wljahpoNZLA",
-    "lat": 33.7644907350394,
-    "lng": -84.3820770816271,
-    "heading": 1.3979982
-  },
-  {
-    "image_name": "facade_001_tile_14_6.jpg",
-    "pano_index": 1,
-    "tile_x": 14,
-    "tile_y": 6,
-    "zoom": 4,
-    "pano_id": "6OV8hu_cxy_wljahpoNZLA",
-    "lat": 33.7644907350394,
-    "lng": -84.3820770816271,
-    "heading": 1.3979982
-  },
-  {
-    "image_name": "facade_002_tile_10_1.jpg",
+    "image_name": "facade_002_tile_3_1.jpg",
     "pano_index": 2,
-    "tile_x": 10,
+    "tile_x": 3,
     "tile_y": 1,
     "zoom": 4,
     "pano_id": "RoUIqGwSX81Qn3HfQbtKHg",
@@ -671,9 +451,9 @@
     "heading": 0.78536683
   },
   {
-    "image_name": "facade_002_tile_11_1.jpg",
+    "image_name": "facade_002_tile_4_1.jpg",
     "pano_index": 2,
-    "tile_x": 11,
+    "tile_x": 4,
     "tile_y": 1,
     "zoom": 4,
     "pano_id": "RoUIqGwSX81Qn3HfQbtKHg",
@@ -682,9 +462,9 @@
     "heading": 0.78536683
   },
   {
-    "image_name": "facade_002_tile_12_1.jpg",
+    "image_name": "facade_002_tile_5_1.jpg",
     "pano_index": 2,
-    "tile_x": 12,
+    "tile_x": 5,
     "tile_y": 1,
     "zoom": 4,
     "pano_id": "RoUIqGwSX81Qn3HfQbtKHg",
@@ -693,9 +473,9 @@
     "heading": 0.78536683
   },
   {
-    "image_name": "facade_002_tile_13_1.jpg",
+    "image_name": "facade_002_tile_6_1.jpg",
     "pano_index": 2,
-    "tile_x": 13,
+    "tile_x": 6,
     "tile_y": 1,
     "zoom": 4,
     "pano_id": "RoUIqGwSX81Qn3HfQbtKHg",
@@ -704,9 +484,9 @@
     "heading": 0.78536683
   },
   {
-    "image_name": "facade_002_tile_14_1.jpg",
+    "image_name": "facade_002_tile_7_1.jpg",
     "pano_index": 2,
-    "tile_x": 14,
+    "tile_x": 7,
     "tile_y": 1,
     "zoom": 4,
     "pano_id": "RoUIqGwSX81Qn3HfQbtKHg",
@@ -715,9 +495,9 @@
     "heading": 0.78536683
   },
   {
-    "image_name": "facade_002_tile_10_2.jpg",
+    "image_name": "facade_002_tile_3_2.jpg",
     "pano_index": 2,
-    "tile_x": 10,
+    "tile_x": 3,
     "tile_y": 2,
     "zoom": 4,
     "pano_id": "RoUIqGwSX81Qn3HfQbtKHg",
@@ -726,9 +506,9 @@
     "heading": 0.78536683
   },
   {
-    "image_name": "facade_002_tile_11_2.jpg",
+    "image_name": "facade_002_tile_4_2.jpg",
     "pano_index": 2,
-    "tile_x": 11,
+    "tile_x": 4,
     "tile_y": 2,
     "zoom": 4,
     "pano_id": "RoUIqGwSX81Qn3HfQbtKHg",
@@ -737,9 +517,9 @@
     "heading": 0.78536683
   },
   {
-    "image_name": "facade_002_tile_12_2.jpg",
+    "image_name": "facade_002_tile_5_2.jpg",
     "pano_index": 2,
-    "tile_x": 12,
+    "tile_x": 5,
     "tile_y": 2,
     "zoom": 4,
     "pano_id": "RoUIqGwSX81Qn3HfQbtKHg",
@@ -748,9 +528,9 @@
     "heading": 0.78536683
   },
   {
-    "image_name": "facade_002_tile_13_2.jpg",
+    "image_name": "facade_002_tile_6_2.jpg",
     "pano_index": 2,
-    "tile_x": 13,
+    "tile_x": 6,
     "tile_y": 2,
     "zoom": 4,
     "pano_id": "RoUIqGwSX81Qn3HfQbtKHg",
@@ -759,9 +539,9 @@
     "heading": 0.78536683
   },
   {
-    "image_name": "facade_002_tile_14_2.jpg",
+    "image_name": "facade_002_tile_7_2.jpg",
     "pano_index": 2,
-    "tile_x": 14,
+    "tile_x": 7,
     "tile_y": 2,
     "zoom": 4,
     "pano_id": "RoUIqGwSX81Qn3HfQbtKHg",
@@ -770,9 +550,9 @@
     "heading": 0.78536683
   },
   {
-    "image_name": "facade_002_tile_10_3.jpg",
+    "image_name": "facade_002_tile_3_3.jpg",
     "pano_index": 2,
-    "tile_x": 10,
+    "tile_x": 3,
     "tile_y": 3,
     "zoom": 4,
     "pano_id": "RoUIqGwSX81Qn3HfQbtKHg",
@@ -781,9 +561,9 @@
     "heading": 0.78536683
   },
   {
-    "image_name": "facade_002_tile_11_3.jpg",
+    "image_name": "facade_002_tile_4_3.jpg",
     "pano_index": 2,
-    "tile_x": 11,
+    "tile_x": 4,
     "tile_y": 3,
     "zoom": 4,
     "pano_id": "RoUIqGwSX81Qn3HfQbtKHg",
@@ -792,9 +572,9 @@
     "heading": 0.78536683
   },
   {
-    "image_name": "facade_002_tile_12_3.jpg",
+    "image_name": "facade_002_tile_5_3.jpg",
     "pano_index": 2,
-    "tile_x": 12,
+    "tile_x": 5,
     "tile_y": 3,
     "zoom": 4,
     "pano_id": "RoUIqGwSX81Qn3HfQbtKHg",
@@ -803,9 +583,9 @@
     "heading": 0.78536683
   },
   {
-    "image_name": "facade_002_tile_13_3.jpg",
+    "image_name": "facade_002_tile_6_3.jpg",
     "pano_index": 2,
-    "tile_x": 13,
+    "tile_x": 6,
     "tile_y": 3,
     "zoom": 4,
     "pano_id": "RoUIqGwSX81Qn3HfQbtKHg",
@@ -814,9 +594,9 @@
     "heading": 0.78536683
   },
   {
-    "image_name": "facade_002_tile_14_3.jpg",
+    "image_name": "facade_002_tile_7_3.jpg",
     "pano_index": 2,
-    "tile_x": 14,
+    "tile_x": 7,
     "tile_y": 3,
     "zoom": 4,
     "pano_id": "RoUIqGwSX81Qn3HfQbtKHg",
@@ -825,9 +605,9 @@
     "heading": 0.78536683
   },
   {
-    "image_name": "facade_002_tile_10_4.jpg",
+    "image_name": "facade_002_tile_3_4.jpg",
     "pano_index": 2,
-    "tile_x": 10,
+    "tile_x": 3,
     "tile_y": 4,
     "zoom": 4,
     "pano_id": "RoUIqGwSX81Qn3HfQbtKHg",
@@ -836,9 +616,9 @@
     "heading": 0.78536683
   },
   {
-    "image_name": "facade_002_tile_11_4.jpg",
+    "image_name": "facade_002_tile_4_4.jpg",
     "pano_index": 2,
-    "tile_x": 11,
+    "tile_x": 4,
     "tile_y": 4,
     "zoom": 4,
     "pano_id": "RoUIqGwSX81Qn3HfQbtKHg",
@@ -847,9 +627,9 @@
     "heading": 0.78536683
   },
   {
-    "image_name": "facade_002_tile_12_4.jpg",
+    "image_name": "facade_002_tile_5_4.jpg",
     "pano_index": 2,
-    "tile_x": 12,
+    "tile_x": 5,
     "tile_y": 4,
     "zoom": 4,
     "pano_id": "RoUIqGwSX81Qn3HfQbtKHg",
@@ -858,9 +638,9 @@
     "heading": 0.78536683
   },
   {
-    "image_name": "facade_002_tile_13_4.jpg",
+    "image_name": "facade_002_tile_6_4.jpg",
     "pano_index": 2,
-    "tile_x": 13,
+    "tile_x": 6,
     "tile_y": 4,
     "zoom": 4,
     "pano_id": "RoUIqGwSX81Qn3HfQbtKHg",
@@ -869,9 +649,9 @@
     "heading": 0.78536683
   },
   {
-    "image_name": "facade_002_tile_14_4.jpg",
+    "image_name": "facade_002_tile_7_4.jpg",
     "pano_index": 2,
-    "tile_x": 14,
+    "tile_x": 7,
     "tile_y": 4,
     "zoom": 4,
     "pano_id": "RoUIqGwSX81Qn3HfQbtKHg",
@@ -880,119 +660,9 @@
     "heading": 0.78536683
   },
   {
-    "image_name": "facade_002_tile_10_5.jpg",
-    "pano_index": 2,
-    "tile_x": 10,
-    "tile_y": 5,
-    "zoom": 4,
-    "pano_id": "RoUIqGwSX81Qn3HfQbtKHg",
-    "lat": 33.76467867014485,
-    "lng": -84.38207090684163,
-    "heading": 0.78536683
-  },
-  {
-    "image_name": "facade_002_tile_11_5.jpg",
-    "pano_index": 2,
-    "tile_x": 11,
-    "tile_y": 5,
-    "zoom": 4,
-    "pano_id": "RoUIqGwSX81Qn3HfQbtKHg",
-    "lat": 33.76467867014485,
-    "lng": -84.38207090684163,
-    "heading": 0.78536683
-  },
-  {
-    "image_name": "facade_002_tile_12_5.jpg",
-    "pano_index": 2,
-    "tile_x": 12,
-    "tile_y": 5,
-    "zoom": 4,
-    "pano_id": "RoUIqGwSX81Qn3HfQbtKHg",
-    "lat": 33.76467867014485,
-    "lng": -84.38207090684163,
-    "heading": 0.78536683
-  },
-  {
-    "image_name": "facade_002_tile_13_5.jpg",
-    "pano_index": 2,
-    "tile_x": 13,
-    "tile_y": 5,
-    "zoom": 4,
-    "pano_id": "RoUIqGwSX81Qn3HfQbtKHg",
-    "lat": 33.76467867014485,
-    "lng": -84.38207090684163,
-    "heading": 0.78536683
-  },
-  {
-    "image_name": "facade_002_tile_14_5.jpg",
-    "pano_index": 2,
-    "tile_x": 14,
-    "tile_y": 5,
-    "zoom": 4,
-    "pano_id": "RoUIqGwSX81Qn3HfQbtKHg",
-    "lat": 33.76467867014485,
-    "lng": -84.38207090684163,
-    "heading": 0.78536683
-  },
-  {
-    "image_name": "facade_002_tile_10_6.jpg",
-    "pano_index": 2,
-    "tile_x": 10,
-    "tile_y": 6,
-    "zoom": 4,
-    "pano_id": "RoUIqGwSX81Qn3HfQbtKHg",
-    "lat": 33.76467867014485,
-    "lng": -84.38207090684163,
-    "heading": 0.78536683
-  },
-  {
-    "image_name": "facade_002_tile_11_6.jpg",
-    "pano_index": 2,
-    "tile_x": 11,
-    "tile_y": 6,
-    "zoom": 4,
-    "pano_id": "RoUIqGwSX81Qn3HfQbtKHg",
-    "lat": 33.76467867014485,
-    "lng": -84.38207090684163,
-    "heading": 0.78536683
-  },
-  {
-    "image_name": "facade_002_tile_12_6.jpg",
-    "pano_index": 2,
-    "tile_x": 12,
-    "tile_y": 6,
-    "zoom": 4,
-    "pano_id": "RoUIqGwSX81Qn3HfQbtKHg",
-    "lat": 33.76467867014485,
-    "lng": -84.38207090684163,
-    "heading": 0.78536683
-  },
-  {
-    "image_name": "facade_002_tile_13_6.jpg",
-    "pano_index": 2,
-    "tile_x": 13,
-    "tile_y": 6,
-    "zoom": 4,
-    "pano_id": "RoUIqGwSX81Qn3HfQbtKHg",
-    "lat": 33.76467867014485,
-    "lng": -84.38207090684163,
-    "heading": 0.78536683
-  },
-  {
-    "image_name": "facade_002_tile_14_6.jpg",
-    "pano_index": 2,
-    "tile_x": 14,
-    "tile_y": 6,
-    "zoom": 4,
-    "pano_id": "RoUIqGwSX81Qn3HfQbtKHg",
-    "lat": 33.76467867014485,
-    "lng": -84.38207090684163,
-    "heading": 0.78536683
-  },
-  {
-    "image_name": "facade_003_tile_10_1.jpg",
+    "image_name": "facade_003_tile_3_1.jpg",
     "pano_index": 3,
-    "tile_x": 10,
+    "tile_x": 3,
     "tile_y": 1,
     "zoom": 4,
     "pano_id": "_jCTn4Z0ZWLIpm_nZOvP6w",
@@ -1001,9 +671,9 @@
     "heading": 0.7201503
   },
   {
-    "image_name": "facade_003_tile_11_1.jpg",
+    "image_name": "facade_003_tile_4_1.jpg",
     "pano_index": 3,
-    "tile_x": 11,
+    "tile_x": 4,
     "tile_y": 1,
     "zoom": 4,
     "pano_id": "_jCTn4Z0ZWLIpm_nZOvP6w",
@@ -1012,9 +682,9 @@
     "heading": 0.7201503
   },
   {
-    "image_name": "facade_003_tile_12_1.jpg",
+    "image_name": "facade_003_tile_5_1.jpg",
     "pano_index": 3,
-    "tile_x": 12,
+    "tile_x": 5,
     "tile_y": 1,
     "zoom": 4,
     "pano_id": "_jCTn4Z0ZWLIpm_nZOvP6w",
@@ -1023,9 +693,9 @@
     "heading": 0.7201503
   },
   {
-    "image_name": "facade_003_tile_13_1.jpg",
+    "image_name": "facade_003_tile_6_1.jpg",
     "pano_index": 3,
-    "tile_x": 13,
+    "tile_x": 6,
     "tile_y": 1,
     "zoom": 4,
     "pano_id": "_jCTn4Z0ZWLIpm_nZOvP6w",
@@ -1034,9 +704,9 @@
     "heading": 0.7201503
   },
   {
-    "image_name": "facade_003_tile_14_1.jpg",
+    "image_name": "facade_003_tile_7_1.jpg",
     "pano_index": 3,
-    "tile_x": 14,
+    "tile_x": 7,
     "tile_y": 1,
     "zoom": 4,
     "pano_id": "_jCTn4Z0ZWLIpm_nZOvP6w",
@@ -1045,9 +715,9 @@
     "heading": 0.7201503
   },
   {
-    "image_name": "facade_003_tile_10_2.jpg",
+    "image_name": "facade_003_tile_3_2.jpg",
     "pano_index": 3,
-    "tile_x": 10,
+    "tile_x": 3,
     "tile_y": 2,
     "zoom": 4,
     "pano_id": "_jCTn4Z0ZWLIpm_nZOvP6w",
@@ -1056,9 +726,9 @@
     "heading": 0.7201503
   },
   {
-    "image_name": "facade_003_tile_11_2.jpg",
+    "image_name": "facade_003_tile_4_2.jpg",
     "pano_index": 3,
-    "tile_x": 11,
+    "tile_x": 4,
     "tile_y": 2,
     "zoom": 4,
     "pano_id": "_jCTn4Z0ZWLIpm_nZOvP6w",
@@ -1067,9 +737,9 @@
     "heading": 0.7201503
   },
   {
-    "image_name": "facade_003_tile_12_2.jpg",
+    "image_name": "facade_003_tile_5_2.jpg",
     "pano_index": 3,
-    "tile_x": 12,
+    "tile_x": 5,
     "tile_y": 2,
     "zoom": 4,
     "pano_id": "_jCTn4Z0ZWLIpm_nZOvP6w",
@@ -1078,9 +748,9 @@
     "heading": 0.7201503
   },
   {
-    "image_name": "facade_003_tile_13_2.jpg",
+    "image_name": "facade_003_tile_6_2.jpg",
     "pano_index": 3,
-    "tile_x": 13,
+    "tile_x": 6,
     "tile_y": 2,
     "zoom": 4,
     "pano_id": "_jCTn4Z0ZWLIpm_nZOvP6w",
@@ -1089,9 +759,9 @@
     "heading": 0.7201503
   },
   {
-    "image_name": "facade_003_tile_14_2.jpg",
+    "image_name": "facade_003_tile_7_2.jpg",
     "pano_index": 3,
-    "tile_x": 14,
+    "tile_x": 7,
     "tile_y": 2,
     "zoom": 4,
     "pano_id": "_jCTn4Z0ZWLIpm_nZOvP6w",
@@ -1100,9 +770,9 @@
     "heading": 0.7201503
   },
   {
-    "image_name": "facade_003_tile_10_3.jpg",
+    "image_name": "facade_003_tile_3_3.jpg",
     "pano_index": 3,
-    "tile_x": 10,
+    "tile_x": 3,
     "tile_y": 3,
     "zoom": 4,
     "pano_id": "_jCTn4Z0ZWLIpm_nZOvP6w",
@@ -1111,9 +781,9 @@
     "heading": 0.7201503
   },
   {
-    "image_name": "facade_003_tile_11_3.jpg",
+    "image_name": "facade_003_tile_4_3.jpg",
     "pano_index": 3,
-    "tile_x": 11,
+    "tile_x": 4,
     "tile_y": 3,
     "zoom": 4,
     "pano_id": "_jCTn4Z0ZWLIpm_nZOvP6w",
@@ -1122,9 +792,9 @@
     "heading": 0.7201503
   },
   {
-    "image_name": "facade_003_tile_12_3.jpg",
+    "image_name": "facade_003_tile_5_3.jpg",
     "pano_index": 3,
-    "tile_x": 12,
+    "tile_x": 5,
     "tile_y": 3,
     "zoom": 4,
     "pano_id": "_jCTn4Z0ZWLIpm_nZOvP6w",
@@ -1133,9 +803,9 @@
     "heading": 0.7201503
   },
   {
-    "image_name": "facade_003_tile_13_3.jpg",
+    "image_name": "facade_003_tile_6_3.jpg",
     "pano_index": 3,
-    "tile_x": 13,
+    "tile_x": 6,
     "tile_y": 3,
     "zoom": 4,
     "pano_id": "_jCTn4Z0ZWLIpm_nZOvP6w",
@@ -1144,9 +814,9 @@
     "heading": 0.7201503
   },
   {
-    "image_name": "facade_003_tile_14_3.jpg",
+    "image_name": "facade_003_tile_7_3.jpg",
     "pano_index": 3,
-    "tile_x": 14,
+    "tile_x": 7,
     "tile_y": 3,
     "zoom": 4,
     "pano_id": "_jCTn4Z0ZWLIpm_nZOvP6w",
@@ -1155,9 +825,9 @@
     "heading": 0.7201503
   },
   {
-    "image_name": "facade_003_tile_10_4.jpg",
+    "image_name": "facade_003_tile_3_4.jpg",
     "pano_index": 3,
-    "tile_x": 10,
+    "tile_x": 3,
     "tile_y": 4,
     "zoom": 4,
     "pano_id": "_jCTn4Z0ZWLIpm_nZOvP6w",
@@ -1166,9 +836,9 @@
     "heading": 0.7201503
   },
   {
-    "image_name": "facade_003_tile_11_4.jpg",
+    "image_name": "facade_003_tile_4_4.jpg",
     "pano_index": 3,
-    "tile_x": 11,
+    "tile_x": 4,
     "tile_y": 4,
     "zoom": 4,
     "pano_id": "_jCTn4Z0ZWLIpm_nZOvP6w",
@@ -1177,9 +847,9 @@
     "heading": 0.7201503
   },
   {
-    "image_name": "facade_003_tile_12_4.jpg",
+    "image_name": "facade_003_tile_5_4.jpg",
     "pano_index": 3,
-    "tile_x": 12,
+    "tile_x": 5,
     "tile_y": 4,
     "zoom": 4,
     "pano_id": "_jCTn4Z0ZWLIpm_nZOvP6w",
@@ -1188,9 +858,9 @@
     "heading": 0.7201503
   },
   {
-    "image_name": "facade_003_tile_13_4.jpg",
+    "image_name": "facade_003_tile_6_4.jpg",
     "pano_index": 3,
-    "tile_x": 13,
+    "tile_x": 6,
     "tile_y": 4,
     "zoom": 4,
     "pano_id": "_jCTn4Z0ZWLIpm_nZOvP6w",
@@ -1199,9 +869,9 @@
     "heading": 0.7201503
   },
   {
-    "image_name": "facade_003_tile_14_4.jpg",
+    "image_name": "facade_003_tile_7_4.jpg",
     "pano_index": 3,
-    "tile_x": 14,
+    "tile_x": 7,
     "tile_y": 4,
     "zoom": 4,
     "pano_id": "_jCTn4Z0ZWLIpm_nZOvP6w",
@@ -1210,119 +880,9 @@
     "heading": 0.7201503
   },
   {
-    "image_name": "facade_003_tile_10_5.jpg",
-    "pano_index": 3,
-    "tile_x": 10,
-    "tile_y": 5,
-    "zoom": 4,
-    "pano_id": "_jCTn4Z0ZWLIpm_nZOvP6w",
-    "lat": 33.76486236965254,
-    "lng": -84.38206689724032,
-    "heading": 0.7201503
-  },
-  {
-    "image_name": "facade_003_tile_11_5.jpg",
-    "pano_index": 3,
-    "tile_x": 11,
-    "tile_y": 5,
-    "zoom": 4,
-    "pano_id": "_jCTn4Z0ZWLIpm_nZOvP6w",
-    "lat": 33.76486236965254,
-    "lng": -84.38206689724032,
-    "heading": 0.7201503
-  },
-  {
-    "image_name": "facade_003_tile_12_5.jpg",
-    "pano_index": 3,
-    "tile_x": 12,
-    "tile_y": 5,
-    "zoom": 4,
-    "pano_id": "_jCTn4Z0ZWLIpm_nZOvP6w",
-    "lat": 33.76486236965254,
-    "lng": -84.38206689724032,
-    "heading": 0.7201503
-  },
-  {
-    "image_name": "facade_003_tile_13_5.jpg",
-    "pano_index": 3,
-    "tile_x": 13,
-    "tile_y": 5,
-    "zoom": 4,
-    "pano_id": "_jCTn4Z0ZWLIpm_nZOvP6w",
-    "lat": 33.76486236965254,
-    "lng": -84.38206689724032,
-    "heading": 0.7201503
-  },
-  {
-    "image_name": "facade_003_tile_14_5.jpg",
-    "pano_index": 3,
-    "tile_x": 14,
-    "tile_y": 5,
-    "zoom": 4,
-    "pano_id": "_jCTn4Z0ZWLIpm_nZOvP6w",
-    "lat": 33.76486236965254,
-    "lng": -84.38206689724032,
-    "heading": 0.7201503
-  },
-  {
-    "image_name": "facade_003_tile_10_6.jpg",
-    "pano_index": 3,
-    "tile_x": 10,
-    "tile_y": 6,
-    "zoom": 4,
-    "pano_id": "_jCTn4Z0ZWLIpm_nZOvP6w",
-    "lat": 33.76486236965254,
-    "lng": -84.38206689724032,
-    "heading": 0.7201503
-  },
-  {
-    "image_name": "facade_003_tile_11_6.jpg",
-    "pano_index": 3,
-    "tile_x": 11,
-    "tile_y": 6,
-    "zoom": 4,
-    "pano_id": "_jCTn4Z0ZWLIpm_nZOvP6w",
-    "lat": 33.76486236965254,
-    "lng": -84.38206689724032,
-    "heading": 0.7201503
-  },
-  {
-    "image_name": "facade_003_tile_12_6.jpg",
-    "pano_index": 3,
-    "tile_x": 12,
-    "tile_y": 6,
-    "zoom": 4,
-    "pano_id": "_jCTn4Z0ZWLIpm_nZOvP6w",
-    "lat": 33.76486236965254,
-    "lng": -84.38206689724032,
-    "heading": 0.7201503
-  },
-  {
-    "image_name": "facade_003_tile_13_6.jpg",
-    "pano_index": 3,
-    "tile_x": 13,
-    "tile_y": 6,
-    "zoom": 4,
-    "pano_id": "_jCTn4Z0ZWLIpm_nZOvP6w",
-    "lat": 33.76486236965254,
-    "lng": -84.38206689724032,
-    "heading": 0.7201503
-  },
-  {
-    "image_name": "facade_003_tile_14_6.jpg",
-    "pano_index": 3,
-    "tile_x": 14,
-    "tile_y": 6,
-    "zoom": 4,
-    "pano_id": "_jCTn4Z0ZWLIpm_nZOvP6w",
-    "lat": 33.76486236965254,
-    "lng": -84.38206689724032,
-    "heading": 0.7201503
-  },
-  {
-    "image_name": "facade_004_tile_10_1.jpg",
+    "image_name": "facade_004_tile_3_1.jpg",
     "pano_index": 4,
-    "tile_x": 10,
+    "tile_x": 3,
     "tile_y": 1,
     "zoom": 4,
     "pano_id": "4OvuRTT9h0RXGbpZJT_GTQ",
@@ -1331,9 +891,9 @@
     "heading": 359.4619
   },
   {
-    "image_name": "facade_004_tile_11_1.jpg",
+    "image_name": "facade_004_tile_4_1.jpg",
     "pano_index": 4,
-    "tile_x": 11,
+    "tile_x": 4,
     "tile_y": 1,
     "zoom": 4,
     "pano_id": "4OvuRTT9h0RXGbpZJT_GTQ",
@@ -1342,9 +902,9 @@
     "heading": 359.4619
   },
   {
-    "image_name": "facade_004_tile_12_1.jpg",
+    "image_name": "facade_004_tile_5_1.jpg",
     "pano_index": 4,
-    "tile_x": 12,
+    "tile_x": 5,
     "tile_y": 1,
     "zoom": 4,
     "pano_id": "4OvuRTT9h0RXGbpZJT_GTQ",
@@ -1353,9 +913,9 @@
     "heading": 359.4619
   },
   {
-    "image_name": "facade_004_tile_13_1.jpg",
+    "image_name": "facade_004_tile_6_1.jpg",
     "pano_index": 4,
-    "tile_x": 13,
+    "tile_x": 6,
     "tile_y": 1,
     "zoom": 4,
     "pano_id": "4OvuRTT9h0RXGbpZJT_GTQ",
@@ -1364,9 +924,9 @@
     "heading": 359.4619
   },
   {
-    "image_name": "facade_004_tile_14_1.jpg",
+    "image_name": "facade_004_tile_7_1.jpg",
     "pano_index": 4,
-    "tile_x": 14,
+    "tile_x": 7,
     "tile_y": 1,
     "zoom": 4,
     "pano_id": "4OvuRTT9h0RXGbpZJT_GTQ",
@@ -1375,9 +935,9 @@
     "heading": 359.4619
   },
   {
-    "image_name": "facade_004_tile_10_2.jpg",
+    "image_name": "facade_004_tile_3_2.jpg",
     "pano_index": 4,
-    "tile_x": 10,
+    "tile_x": 3,
     "tile_y": 2,
     "zoom": 4,
     "pano_id": "4OvuRTT9h0RXGbpZJT_GTQ",
@@ -1386,9 +946,9 @@
     "heading": 359.4619
   },
   {
-    "image_name": "facade_004_tile_11_2.jpg",
+    "image_name": "facade_004_tile_4_2.jpg",
     "pano_index": 4,
-    "tile_x": 11,
+    "tile_x": 4,
     "tile_y": 2,
     "zoom": 4,
     "pano_id": "4OvuRTT9h0RXGbpZJT_GTQ",
@@ -1397,9 +957,9 @@
     "heading": 359.4619
   },
   {
-    "image_name": "facade_004_tile_12_2.jpg",
+    "image_name": "facade_004_tile_5_2.jpg",
     "pano_index": 4,
-    "tile_x": 12,
+    "tile_x": 5,
     "tile_y": 2,
     "zoom": 4,
     "pano_id": "4OvuRTT9h0RXGbpZJT_GTQ",
@@ -1408,9 +968,9 @@
     "heading": 359.4619
   },
   {
-    "image_name": "facade_004_tile_13_2.jpg",
+    "image_name": "facade_004_tile_6_2.jpg",
     "pano_index": 4,
-    "tile_x": 13,
+    "tile_x": 6,
     "tile_y": 2,
     "zoom": 4,
     "pano_id": "4OvuRTT9h0RXGbpZJT_GTQ",
@@ -1419,9 +979,9 @@
     "heading": 359.4619
   },
   {
-    "image_name": "facade_004_tile_14_2.jpg",
+    "image_name": "facade_004_tile_7_2.jpg",
     "pano_index": 4,
-    "tile_x": 14,
+    "tile_x": 7,
     "tile_y": 2,
     "zoom": 4,
     "pano_id": "4OvuRTT9h0RXGbpZJT_GTQ",
@@ -1430,9 +990,9 @@
     "heading": 359.4619
   },
   {
-    "image_name": "facade_004_tile_10_3.jpg",
+    "image_name": "facade_004_tile_3_3.jpg",
     "pano_index": 4,
-    "tile_x": 10,
+    "tile_x": 3,
     "tile_y": 3,
     "zoom": 4,
     "pano_id": "4OvuRTT9h0RXGbpZJT_GTQ",
@@ -1441,9 +1001,9 @@
     "heading": 359.4619
   },
   {
-    "image_name": "facade_004_tile_11_3.jpg",
+    "image_name": "facade_004_tile_4_3.jpg",
     "pano_index": 4,
-    "tile_x": 11,
+    "tile_x": 4,
     "tile_y": 3,
     "zoom": 4,
     "pano_id": "4OvuRTT9h0RXGbpZJT_GTQ",
@@ -1452,9 +1012,9 @@
     "heading": 359.4619
   },
   {
-    "image_name": "facade_004_tile_12_3.jpg",
+    "image_name": "facade_004_tile_5_3.jpg",
     "pano_index": 4,
-    "tile_x": 12,
+    "tile_x": 5,
     "tile_y": 3,
     "zoom": 4,
     "pano_id": "4OvuRTT9h0RXGbpZJT_GTQ",
@@ -1463,9 +1023,9 @@
     "heading": 359.4619
   },
   {
-    "image_name": "facade_004_tile_13_3.jpg",
+    "image_name": "facade_004_tile_6_3.jpg",
     "pano_index": 4,
-    "tile_x": 13,
+    "tile_x": 6,
     "tile_y": 3,
     "zoom": 4,
     "pano_id": "4OvuRTT9h0RXGbpZJT_GTQ",
@@ -1474,9 +1034,9 @@
     "heading": 359.4619
   },
   {
-    "image_name": "facade_004_tile_14_3.jpg",
+    "image_name": "facade_004_tile_7_3.jpg",
     "pano_index": 4,
-    "tile_x": 14,
+    "tile_x": 7,
     "tile_y": 3,
     "zoom": 4,
     "pano_id": "4OvuRTT9h0RXGbpZJT_GTQ",
@@ -1485,9 +1045,9 @@
     "heading": 359.4619
   },
   {
-    "image_name": "facade_004_tile_10_4.jpg",
+    "image_name": "facade_004_tile_3_4.jpg",
     "pano_index": 4,
-    "tile_x": 10,
+    "tile_x": 3,
     "tile_y": 4,
     "zoom": 4,
     "pano_id": "4OvuRTT9h0RXGbpZJT_GTQ",
@@ -1496,9 +1056,9 @@
     "heading": 359.4619
   },
   {
-    "image_name": "facade_004_tile_11_4.jpg",
+    "image_name": "facade_004_tile_4_4.jpg",
     "pano_index": 4,
-    "tile_x": 11,
+    "tile_x": 4,
     "tile_y": 4,
     "zoom": 4,
     "pano_id": "4OvuRTT9h0RXGbpZJT_GTQ",
@@ -1507,9 +1067,9 @@
     "heading": 359.4619
   },
   {
-    "image_name": "facade_004_tile_12_4.jpg",
+    "image_name": "facade_004_tile_5_4.jpg",
     "pano_index": 4,
-    "tile_x": 12,
+    "tile_x": 5,
     "tile_y": 4,
     "zoom": 4,
     "pano_id": "4OvuRTT9h0RXGbpZJT_GTQ",
@@ -1518,9 +1078,9 @@
     "heading": 359.4619
   },
   {
-    "image_name": "facade_004_tile_13_4.jpg",
+    "image_name": "facade_004_tile_6_4.jpg",
     "pano_index": 4,
-    "tile_x": 13,
+    "tile_x": 6,
     "tile_y": 4,
     "zoom": 4,
     "pano_id": "4OvuRTT9h0RXGbpZJT_GTQ",
@@ -1529,120 +1089,10 @@
     "heading": 359.4619
   },
   {
-    "image_name": "facade_004_tile_14_4.jpg",
+    "image_name": "facade_004_tile_7_4.jpg",
     "pano_index": 4,
-    "tile_x": 14,
+    "tile_x": 7,
     "tile_y": 4,
-    "zoom": 4,
-    "pano_id": "4OvuRTT9h0RXGbpZJT_GTQ",
-    "lat": 33.765125689446364,
-    "lng": -84.38206104322194,
-    "heading": 359.4619
-  },
-  {
-    "image_name": "facade_004_tile_10_5.jpg",
-    "pano_index": 4,
-    "tile_x": 10,
-    "tile_y": 5,
-    "zoom": 4,
-    "pano_id": "4OvuRTT9h0RXGbpZJT_GTQ",
-    "lat": 33.765125689446364,
-    "lng": -84.38206104322194,
-    "heading": 359.4619
-  },
-  {
-    "image_name": "facade_004_tile_11_5.jpg",
-    "pano_index": 4,
-    "tile_x": 11,
-    "tile_y": 5,
-    "zoom": 4,
-    "pano_id": "4OvuRTT9h0RXGbpZJT_GTQ",
-    "lat": 33.765125689446364,
-    "lng": -84.38206104322194,
-    "heading": 359.4619
-  },
-  {
-    "image_name": "facade_004_tile_12_5.jpg",
-    "pano_index": 4,
-    "tile_x": 12,
-    "tile_y": 5,
-    "zoom": 4,
-    "pano_id": "4OvuRTT9h0RXGbpZJT_GTQ",
-    "lat": 33.765125689446364,
-    "lng": -84.38206104322194,
-    "heading": 359.4619
-  },
-  {
-    "image_name": "facade_004_tile_13_5.jpg",
-    "pano_index": 4,
-    "tile_x": 13,
-    "tile_y": 5,
-    "zoom": 4,
-    "pano_id": "4OvuRTT9h0RXGbpZJT_GTQ",
-    "lat": 33.765125689446364,
-    "lng": -84.38206104322194,
-    "heading": 359.4619
-  },
-  {
-    "image_name": "facade_004_tile_14_5.jpg",
-    "pano_index": 4,
-    "tile_x": 14,
-    "tile_y": 5,
-    "zoom": 4,
-    "pano_id": "4OvuRTT9h0RXGbpZJT_GTQ",
-    "lat": 33.765125689446364,
-    "lng": -84.38206104322194,
-    "heading": 359.4619
-  },
-  {
-    "image_name": "facade_004_tile_10_6.jpg",
-    "pano_index": 4,
-    "tile_x": 10,
-    "tile_y": 6,
-    "zoom": 4,
-    "pano_id": "4OvuRTT9h0RXGbpZJT_GTQ",
-    "lat": 33.765125689446364,
-    "lng": -84.38206104322194,
-    "heading": 359.4619
-  },
-  {
-    "image_name": "facade_004_tile_11_6.jpg",
-    "pano_index": 4,
-    "tile_x": 11,
-    "tile_y": 6,
-    "zoom": 4,
-    "pano_id": "4OvuRTT9h0RXGbpZJT_GTQ",
-    "lat": 33.765125689446364,
-    "lng": -84.38206104322194,
-    "heading": 359.4619
-  },
-  {
-    "image_name": "facade_004_tile_12_6.jpg",
-    "pano_index": 4,
-    "tile_x": 12,
-    "tile_y": 6,
-    "zoom": 4,
-    "pano_id": "4OvuRTT9h0RXGbpZJT_GTQ",
-    "lat": 33.765125689446364,
-    "lng": -84.38206104322194,
-    "heading": 359.4619
-  },
-  {
-    "image_name": "facade_004_tile_13_6.jpg",
-    "pano_index": 4,
-    "tile_x": 13,
-    "tile_y": 6,
-    "zoom": 4,
-    "pano_id": "4OvuRTT9h0RXGbpZJT_GTQ",
-    "lat": 33.765125689446364,
-    "lng": -84.38206104322194,
-    "heading": 359.4619
-  },
-  {
-    "image_name": "facade_004_tile_14_6.jpg",
-    "pano_index": 4,
-    "tile_x": 14,
-    "tile_y": 6,
     "zoom": 4,
     "pano_id": "4OvuRTT9h0RXGbpZJT_GTQ",
     "lat": 33.765125689446364,
