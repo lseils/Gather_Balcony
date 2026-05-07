@@ -22,6 +22,7 @@ Usage:
 import os
 import json
 import math
+from turtle import heading
 import requests
 from pathlib import Path
 from dotenv import load_dotenv
@@ -48,7 +49,7 @@ METADATA_FILE = "panorama_metadata.json"
 # Zoom level 3 = 4x2 tiles = good balance of resolution and download size
 # Each tile is 512x512px, so full panorama = 2048x1024px
 # Zoom level 4 = 8x4 tiles = 4096x2048px (higher quality but 4x more requests)
-ZOOM_LEVEL = 3
+ZOOM_LEVEL = 4
 
 PATH_COORDINATES = [
     (33.76433, -84.38210), # Start
@@ -120,31 +121,32 @@ def get_pano_info(api_key: str, session: str, lat: float, lng: float):
 # =============================================================================
 # STEP 3 & 4: Download tiles and DO NOT STITCH — instead, save them separately as perspective crops
 # =============================================================================
-def download_tiles_separately(api_key: str, session: str, pano_id: str, 
-                               zoom: int, output_folder: str, image_index: int):
+def download_tiles_separately(api_key: str, session: str, pano_id: str,
+                               zoom: int, output_folder: str, image_index: int,
+                               heading: float, facade_bearing: float = 270.0):
     """
-    Downloads tiles individually as perspective crops instead of stitching
-    into equirectangular. Each tile is a valid gnomonic (perspective) image
-    that COLMAP can process natively with a pinhole camera model.
-    
-    At zoom 3: 8x4 = 32 tiles per panorama
-    At zoom 4: 16x8 = 128 tiles per panorama (overkill)
-    
-    We only save the tiles facing the facade (center columns) to avoid
-    giving COLMAP sky, ground, and behind-camera tiles.
+    Downloads tiles facing the facade instead of stitching into equirectangular.
+    Each tile is a gnomonic (perspective) image suitable for COLMAP PINHOLE model.
+
+    facade_bearing: compass bearing FROM camera TO facade (270 = west)
     """
     num_x = 2 ** zoom
     num_y = 2 ** (zoom - 1)
+    deg_per_tile = 360.0 / num_x
+
+    # Which tile column faces the facade?
+    relative = (facade_bearing - heading) % 360
+    x_center = round(relative / deg_per_tile) % num_x
+    x_range = [
+    (x_center - 2) % num_x,
+    (x_center - 1) % num_x,
+    x_center % num_x,
+    (x_center + 1) % num_x,
+    (x_center + 2) % num_x,
+    ]
+    y_range = range(1, num_y - 1)  # skip top (sky) and bottom (ground) rows
 
     saved = []
-
-    # Only grab horizontally centered tiles facing the facade heading
-    # For a facade-facing shot, the center 3 columns out of num_x are enough
-    # and vertically skip the top/bottom rows (sky and ground)
-    x_center = num_x // 2
-    x_range = range(max(0, x_center - 1), min(num_x, x_center + 2))  # 3 columns
-    y_range = range(1, num_y - 1)  # skip top and bottom rows
-
     for y in y_range:
         for x in x_range:
             tile_url = (
@@ -168,6 +170,7 @@ def download_tiles_separately(api_key: str, session: str, pano_id: str,
                 "tile_x": x,
                 "tile_y": y,
                 "zoom": zoom,
+                "heading": heading,
             })
 
     return saved
@@ -206,8 +209,11 @@ def main():
 
         # FIX 1: pass output_folder and image_index
         tiles = download_tiles_separately(
-            API_KEY, session, pano_id, ZOOM_LEVEL, OUTPUT_FOLDER, image_index
+            API_KEY, session, pano_id, ZOOM_LEVEL, OUTPUT_FOLDER, image_index,
+            heading=heading,
+            facade_bearing=270.0,
         )
+
         print(f"    Saved {len(tiles)} tiles")
 
         # FIX 2: metadata per tile, not per panorama
