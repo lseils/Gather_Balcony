@@ -2,166 +2,190 @@
 """
 generate_colmap_poses.py
 ------------------------
-Street View images lack EXIF GPS data, so COLMAP can't determine camera
-positions automatically. This script creates a COLMAP-compatible text model
-with known camera poses derived from the coordinates and headings used in
-fetch_streetview.py, giving COLMAP a strong prior to work from.
+Reads panorama_metadata.json (written by fetch_streetview_tiles.py) and
+generates COLMAP-compatible cameras.txt / images.txt with accurate camera
+positions and a PINHOLE camera model for perspective tiles.
 
 Usage:
     python generate_colmap_poses.py
-    (run BEFORE run_colmap.sh)
+    (run AFTER fetch_streetview_tiles.py, BEFORE run_colmap.sh)
 """
 
 import os
+import json
 import math
-import struct
-import sqlite3
+from pathlib import Path
+import numpy as np
 
 # =============================================================================
-# CONFIG — must match fetch_streetview.py exactly
+# CONFIG
 # =============================================================================
-OUTPUT_FOLDER   = "street_images"
-COLMAP_DIR      = "colmap_workspace"
-SPARSE_DIR      = os.path.join(COLMAP_DIR, "sparse", "0")
+METADATA_FILE = "panorama_metadata.json"
+COLMAP_DIR    = "colmap_workspace"
+SPARSE_DIR    = os.path.join(COLMAP_DIR, "sparse", "0")
 
-PATH_COORDINATES = [
-    (33.76433, -84.38209),
-    (33.76443, -84.38209),
-    (33.76453, -84.38209),
-    (33.76463, -84.38209),
-]
-
-FACADE_HEADINGS = [230, 245, 260, 275, 295]
-
-OPTIMAL_PITCH = 20   # degrees
-OPTIMAL_FOV   = 60   # degrees
-IMAGE_SIZE    = 640  # pixels (square)
+TILE_SIZE     = 512   # Street View tiles are always 512x512px
 
 # =============================================================================
 # HELPERS
 # =============================================================================
 
-def heading_pitch_to_quaternion(heading_deg, pitch_deg):
+def tile_focal_length(zoom: int) -> float:
     """
-    Convert Street View heading + pitch to a rotation quaternion (qw, qx, qy, qz).
-    Heading: degrees clockwise from North (0=N, 90=E, 180=S, 270=W)
-    Pitch:   degrees up from horizontal
-    Returns quaternion in COLMAP convention (world-to-camera).
+    Compute focal length in pixels for a Street View tile.
+    
+    Street View tiles are gnomonic projections. At zoom level Z,
+    the full 360° equirectangular is divided into 2^Z columns.
+    Each tile covers 360 / 2^Z degrees horizontally.
+    
+    focal_length = (TILE_SIZE / 2) / tan(hfov / 2)
     """
-    # Convert to radians
-    yaw   = math.radians(-heading_deg + 90)  # Convert to math convention (CCW from East)
+    num_x_tiles = 2 ** zoom
+    hfov_deg = 360.0 / num_x_tiles          # horizontal FOV per tile
+    hfov_rad = math.radians(hfov_deg)
+    focal = (TILE_SIZE / 2.0) / math.tan(hfov_rad / 2.0)
+    return focal
+
+
+def tile_heading(base_heading: float, tile_x: int, zoom: int) -> float:
+    """
+    Compute the compass heading a specific tile column is facing.
+    tile_x=0 is due North (0°), increasing clockwise.
+    """
+    num_x_tiles = 2 ** zoom
+    deg_per_tile = 360.0 / num_x_tiles
+    tile_heading = (base_heading + (tile_x - num_x_tiles / 2) * deg_per_tile) % 360
+    return tile_heading
+
+
+def heading_pitch_to_quaternion(heading_deg: float, pitch_deg: float = 0.0):
+    """
+    Convert heading + pitch to COLMAP world-to-camera quaternion.
+    Heading: degrees clockwise from North.
+    Pitch: degrees up from horizontal (usually 0 for facade tiles).
+    """
+    # Convert to math convention: heading clockwise from North → CCW from East
+    yaw = math.radians(-heading_deg + 90)
     pitch = math.radians(pitch_deg)
 
-    # Rotation around Z (yaw) then X (pitch)
-    cy, sy = math.cos(yaw / 2),   math.sin(yaw / 2)
-    cp, sp = math.cos(pitch / 2), math.sin(pitch / 2)
+    # Yaw rotation (around Z)
+    qw_y = math.cos(yaw / 2)
+    qz_y = math.sin(yaw / 2)
 
-    # Yaw quaternion (around Z axis)
-    qw_y, qx_y, qy_y, qz_y = cy, 0, 0, sy
-    # Pitch quaternion (around X axis)
-    qw_p, qx_p, qy_p, qz_p = cp, sp, 0, 0
+    # Pitch rotation (around X)  
+    qw_p = math.cos(pitch / 2)
+    qx_p = math.sin(pitch / 2)
 
-    # Combined: pitch * yaw
-    qw = qw_y * qw_p - qx_y * qx_p - qy_y * qy_p - qz_y * qz_p
-    qx = qw_y * qx_p + qx_y * qw_p + qy_y * qz_p - qz_y * qy_p
-    qy = qw_y * qy_p - qx_y * qz_p + qy_y * qw_p + qz_y * qx_p
-    qz = qw_y * qz_p + qx_y * qy_p - qy_y * qx_p + qz_y * qw_p
+    # Combine: q = q_yaw * q_pitch
+    qw = qw_y * qw_p
+    qx = qw_y * qx_p
+    qy = qz_y * qx_p  # cross terms
+    qz = qz_y * qw_p
 
-    return qw, qx, qy, qz
+    # Normalize
+    norm = math.sqrt(qw**2 + qx**2 + qy**2 + qz**2)
+    return qw/norm, qx/norm, qy/norm, qz/norm
 
 
 def latlon_to_xyz(lat, lng, ref_lat, ref_lng):
-    """
-    Convert lat/lng to local XYZ in meters relative to a reference point.
-    Uses simple flat-earth approximation (fine for small areas like a city block).
-    """
-    R = 6371000  # Earth radius in meters
+    """Convert lat/lng to local XYZ in meters relative to reference point."""
+    R = 6371000
     x = math.radians(lng - ref_lng) * R * math.cos(math.radians(ref_lat))
     y = math.radians(lat - ref_lat) * R
-    z = 0.0  # Street View is roughly at ground level
+    z = 0.0
     return x, y, z
-
-
-def fov_to_focal(fov_deg, image_size):
-    """Convert field-of-view to focal length in pixels."""
-    return (image_size / 2) / math.tan(math.radians(fov_deg / 2))
 
 
 # =============================================================================
 # MAIN
 # =============================================================================
-
 def main():
-    os.makedirs(SPARSE_DIR, exist_ok=True)
+    if not Path(METADATA_FILE).exists():
+        print(f"[ERROR] {METADATA_FILE} not found.")
+        print("  Run fetch_streetview_tiles.py first.")
+        exit(1)
 
-    ref_lat, ref_lng = PATH_COORDINATES[0]
-    focal = fov_to_focal(OPTIMAL_FOV, IMAGE_SIZE)
-    cx = cy = IMAGE_SIZE / 2.0
+    with open(METADATA_FILE) as f:
+        metadata = json.load(f)
 
-    print(f"Reference point: ({ref_lat}, {ref_lng})")
-    print(f"Focal length:    {focal:.1f}px  (from FOV={OPTIMAL_FOV}°)")
-    print(f"Principal point: ({cx}, {cy})")
-    print()
+    if not metadata:
+        print("[ERROR] No tiles in metadata file.")
+        exit(1)
+
+    Path(SPARSE_DIR).mkdir(parents=True, exist_ok=True)
+
+    ref_lat = metadata[0]["lat"]
+    ref_lng = metadata[0]["lng"]
+
+    # Compute camera intrinsics from zoom level
+    zoom = metadata[0]["zoom"]
+    focal = tile_focal_length(zoom)
+    cx = TILE_SIZE / 2.0
+    cy = TILE_SIZE / 2.0
+
+    print(f"Generating COLMAP pose priors for {len(metadata)} tiles...")
+    print(f"Reference point: ({ref_lat:.5f}, {ref_lng:.5f})")
+    print(f"Camera model: PINHOLE — focal={focal:.1f}px, {TILE_SIZE}x{TILE_SIZE}")
 
     # -------------------------------------------------------------------------
-    # cameras.txt — one shared camera model for all images (SIMPLE_PINHOLE)
+    # cameras.txt — single PINHOLE camera (all tiles same intrinsics)
+    # PINHOLE params: fx fy cx cy
     # -------------------------------------------------------------------------
     cameras_path = os.path.join(SPARSE_DIR, "cameras.txt")
     with open(cameras_path, "w") as f:
         f.write("# Camera list with one line of data per camera:\n")
         f.write("#   CAMERA_ID, MODEL, WIDTH, HEIGHT, PARAMS[]\n")
-        # SIMPLE_PINHOLE: f, cx, cy
-        f.write(f"1 SIMPLE_PINHOLE {IMAGE_SIZE} {IMAGE_SIZE} {focal:.4f} {cx:.4f} {cy:.4f}\n")
-    print(f"[OK] cameras.txt written")
+        f.write(f"1 PINHOLE {TILE_SIZE} {TILE_SIZE} {focal:.4f} {focal:.4f} {cx:.4f} {cy:.4f}\n")
+
+    print(f"[OK] cameras.txt — PINHOLE {TILE_SIZE}x{TILE_SIZE} f={focal:.1f}")
 
     # -------------------------------------------------------------------------
-    # images.txt — one entry per image with pose (qw qx qy qz tx ty tz)
+    # images.txt — one entry per tile with pose derived from GPS + tile position
     # -------------------------------------------------------------------------
     images_path = os.path.join(SPARSE_DIR, "images.txt")
-    image_index = 0
-    entries = []
-
-    for lat, lng in PATH_COORDINATES:
-        tx, ty, tz = latlon_to_xyz(lat, lng, ref_lat, ref_lng)
-        for heading in FACADE_HEADINGS:
-            fname = f"facade_{image_index:03d}.jpg"
-            qw, qx, qy, qz = heading_pitch_to_quaternion(heading, OPTIMAL_PITCH)
-
-            # Camera translation in world coords
-            # COLMAP uses world-to-camera transform: t = -R * T_world
-            entries.append((image_index + 1, qw, qx, qy, qz, tx, ty, tz, 1, fname))
-            image_index += 1
 
     with open(images_path, "w") as f:
         f.write("# Image list with two lines of data per image:\n")
         f.write("#   IMAGE_ID, QW, QX, QY, QZ, TX, TY, TZ, CAMERA_ID, NAME\n")
         f.write("#   POINTS2D[] as (X, Y, POINT3D_ID)\n")
-        for entry in entries:
-            img_id, qw, qx, qy, qz, tx, ty, tz, cam_id, fname = entry
-            f.write(f"{img_id} {qw:.8f} {qx:.8f} {qy:.8f} {qz:.8f} "
-                    f"{tx:.4f} {ty:.4f} {tz:.4f} {cam_id} {fname}\n")
-            f.write("\n")  # Empty line = no 2D points yet (COLMAP will fill these)
 
-    print(f"[OK] images.txt written ({image_index} images)")
+        for i, tile in enumerate(metadata):
+            # Camera position from GPS
+            tx_world, ty_world, tz_world = latlon_to_xyz(
+                tile["lat"], tile["lng"], ref_lat, ref_lng
+            )
 
-    # -------------------------------------------------------------------------
-    # points3D.txt — empty (COLMAP will populate this during reconstruction)
-    # -------------------------------------------------------------------------
-    points_path = os.path.join(SPARSE_DIR, "points3D.txt")
-    with open(points_path, "w") as f:
-        f.write("# 3D point list with one line of data per point:\n")
-        f.write("#   POINT3D_ID, X, Y, Z, R, G, B, ERROR, TRACK[] as (IMAGE_ID, POINT2D_IDX)\n")
-    print(f"[OK] points3D.txt written (empty — COLMAP will fill this)")
+            # Tile-specific heading (each column faces a different direction)
+            th = tile_heading(tile["heading"], tile["tile_x"], tile["zoom"])
+            qw, qx, qy, qz = heading_pitch_to_quaternion(th)
 
-    print()
-    print("=" * 50)
-    print("  Pose priors ready! Now run:")
-    print()
-    print("  ./run_colmap.sh")
-    print()
-    print("  The mapper will use these poses as initialization,")
-    print("  which should register far more images.")
-    print("=" * 50)
+            # T = -R * C (COLMAP convention)
+            R = np.array([
+                [1 - 2*qy**2 - 2*qz**2, 2*qx*qy - 2*qz*qw, 2*qx*qz + 2*qy*qw],
+                [2*qx*qy + 2*qz*qw,     1 - 2*qx**2 - 2*qz**2, 2*qy*qz - 2*qx*qw],
+                [2*qx*qz - 2*qy*qw,     2*qy*qz + 2*qx*qw, 1 - 2*qx**2 - 2*qy**2]
+            ])
+            C = np.array([tx_world, ty_world, tz_world])
+            T = -R.dot(C)
+
+            f.write(
+                f"{i+1} {qw:.8f} {qx:.8f} {qy:.8f} {qz:.8f} "
+                f"{T[0]:.4f} {T[1]:.4f} {T[2]:.4f} 1 {tile['image_name']}\n"
+            )
+            f.write("\n")  # empty points2D line — required by COLMAP format
+
+            print(f"  [{i:02d}] {tile['image_name']} — "
+                  f"pos=({tx_world:.1f}m, {ty_world:.1f}m) "
+                  f"heading={th:.1f}°")
+
+    print(f"[OK] images.txt — {len(metadata)} tiles")
+
+    # points3D.txt — empty, COLMAP fills this during mapping
+    with open(os.path.join(SPARSE_DIR, "points3D.txt"), "w") as f:
+        f.write("# 3D point list — COLMAP will populate this\n")
+
+    print(f"[OK] points3D.txt — empty")
+    print(f"\n  Now run: ./run_colmap.sh")
 
 
 if __name__ == "__main__":
