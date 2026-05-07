@@ -15,6 +15,7 @@ import os
 import json
 import math
 from pathlib import Path
+import numpy as np 
 
 # =============================================================================
 # CONFIG
@@ -101,17 +102,31 @@ def main():
         f.write("#   POINTS2D[] as (X, Y, POINT3D_ID)\n")
 
         for i, pano in enumerate(metadata):
-            tx, ty, tz = latlon_to_xyz(pano["lat"], pano["lng"], ref_lat, ref_lng)
+            # 1. Calculate World Coordinates (C)
+            tx_world, ty_world, tz_world = latlon_to_xyz(pano["lat"], pano["lng"], ref_lat, ref_lng)
+            
+            # 2. Calculate Rotation (R)
             qw, qx, qy, qz = heading_to_quaternion(pano["heading"])
+            R = np.array([
+                [1 - 2*qy**2 - 2*qz**2, 2*qx*qy - 2*qz*qw, 2*qx*qz + 2*qy*qw],
+                [2*qx*qy + 2*qz*qw, 1 - 2*qx**2 - 2*qz**2, 2*qy*qz - 2*qx*qw],
+                [2*qx*qz - 2*qy*qw, 2*qy*qz + 2*qx*qw, 1 - 2*qx**2 - 2*qy**2]
+            ])
 
+            # 3. Calculate Translation Vector (T = -R * C)
+            C = np.array([tx_world, ty_world, tz_world])
+            T = -R.dot(C)
+
+            # 4. Write to images.txt
+            # Line 1: Image attributes
             f.write(
                 f"{i+1} {qw:.8f} {qx:.8f} {qy:.8f} {qz:.8f} "
-                f"{tx:.4f} {ty:.4f} {tz:.4f} 1 {pano['image_name']}\n"
+                f"{T[0]:.4f} {T[1]:.4f} {T[2]:.4f} 1 {pano['image_name']}\n"
             )
+            # Line 2: Empty line for points2D (CRITICAL for COLMAP format)
             f.write("\n")
 
-            print(f"  [{i}] {pano['image_name']} — pos=({tx:.1f}m, {ty:.1f}m) heading={pano['heading']:.1f}°")
-
+            print(f"  [{i}] {pano['image_name']} — world_pos=({tx_world:.1f}m, {ty_world:.1f}m) heading={pano['heading']:.1f}°")
     print(f"[OK] images.txt — {len(metadata)} images")
 
     # -------------------------------------------------------------------------
