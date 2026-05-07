@@ -2,27 +2,13 @@
 """
 fetch_streetview_tiles.py
 --------------------------
-Downloads full equirectangular panoramas using the Street View Tiles API.
-Unlike the Static API (which gives cropped perspective crops), this gives
-COLMAP the full 360° image with consistent spherical geometry — much better
-for photogrammetry.
-
-Workflow:
-  1. POST to createSession to get a session token
-  2. For each coordinate, get the panoId + real camera position
-  3. Download all panorama tiles at zoom level 3 (good resolution/size tradeoff)
-  4. Stitch tiles into a single equirectangular image
-  5. Save metadata (real lat/lng, heading) for COLMAP pose priors
-
-Usage:
-  pip install requests pillow
-  python fetch_streetview_tiles.py
+Downloads Google Street View tiles along a dense 4-meter path to ensure 
+high overlap for COLMAP Structure from Motion (SfM).
 """
 
 import os
 import json
 import math
-from turtle import heading
 import requests
 from pathlib import Path
 from dotenv import load_dotenv
@@ -46,17 +32,13 @@ if not API_KEY:
 OUTPUT_FOLDER = "street_images"
 METADATA_FILE = "panorama_metadata.json"
 
-# Zoom level 3 = 4x2 tiles = good balance of resolution and download size
-# Each tile is 512x512px, so full panorama = 2048x1024px
-# Zoom level 4 = 8x4 tiles = 4096x2048px (higher quality but 4x more requests)
-ZOOM_LEVEL = 4
+ZOOM_LEVEL = 3
 
+# We will only use the FIRST and LAST coordinate to draw our line.
+# The script will automatically drop pins every 4 meters between them.
 PATH_COORDINATES = [
-    (33.76433, -84.38210), # Start
-    (33.76450, -84.38210), # ~18 meters away
-    (33.76470, -84.38210), # ~22 meters away
-    (33.76490, -84.38210), # ~22 meters away
-    (33.76510, -84.38210), # Final point
+    (33.76433, -84.38210), # Start (South end of building)
+    (33.76510, -84.38210), # Final point (North end of building)
 ]
 
 # =============================================================================
@@ -73,68 +55,78 @@ def get_session_token(api_key: str) -> str:
     r = requests.post(f"{url}?key={api_key}", json=payload)
     r.raise_for_status()
     token = r.json()["session"]
-    print(f"[OK] Session token obtained (valid ~2 weeks)")
+    print(f"[OK] Session token obtained")
     return token
 
-
 # =============================================================================
-# STEP 2: Get panoId + real camera position for a coordinate
+# STEP 2: Interpolate coordinates to get dense Pano IDs
 # =============================================================================
-def get_pano_info(api_key: str, session: str, lat: float, lng: float):
-    url = "https://tile.googleapis.com/v1/streetview/panoIds"
-    payload = {
-        "locations": [{"lat": lat, "lng": lng}],
-        "radius": 200
-    }
+def get_dense_pano_ids(api_key, start_coord, end_coord, step_meters=4.0):
+    print(f"\nCalculating dense path every {step_meters}m...")
+    lat1, lon1 = start_coord
+    lat2, lon2 = end_coord
     
-    # Step 1: Get the Pano ID
-    r = requests.post(f"{url}?session={session}&key={api_key}", json=payload)
-    r.raise_for_status()
-    data = r.json()
+    avg_lat = math.radians((lat1 + lat2) / 2.0)
+    lat_diff_meters = (lat2 - lat1) * 111139.0
+    lon_diff_meters = (lon2 - lon1) * (111139.0 * math.cos(avg_lat))
+    total_distance = math.sqrt(lat_diff_meters**2 + lon_diff_meters**2)
+    
+    num_steps = max(int(total_distance / step_meters), 1)
+    print(f"Total distance: ~{total_distance:.1f}m. Sampling {num_steps} points...")
 
-    if not data.get("panoIds") or data["panoIds"][0] == "":
+    unique_panos = []
+    
+    for i in range(num_steps + 1):
+        fraction = i / float(num_steps)
+        current_lat = lat1 + (lat2 - lat1) * fraction
+        current_lon = lon1 + (lon2 - lon1) * fraction
+        
+        url = f"https://maps.googleapis.com/maps/api/streetview/metadata"
+        params = {
+            "location": f"{current_lat},{current_lon}",
+            "key": api_key,
+            "radius": 15
+        }
+        
+        response = requests.get(url, params=params)
+        data = response.json()
+        
+        if data.get("status") == "OK":
+            pano_id = data["pano_id"]
+            if pano_id not in unique_panos:
+                unique_panos.append(pano_id)
+                print(f"  Found new Pano ID: {pano_id} (Step {i})")
+        else:
+            print(f"  No pano found near step {i} ({current_lat:.5f}, {current_lon:.5f})")
+
+    print(f"[OK] Found {len(unique_panos)} tightly spaced panoramas.")
+    return unique_panos
+
+# =============================================================================
+# STEP 3: Get real metadata for a specific Pano ID
+# =============================================================================
+def get_pano_metadata_by_id(api_key: str, session: str, pano_id: str):
+    """Fetches the exact real-world lat, lng, and heading for a given pano_id"""
+    meta_url = f"https://tile.googleapis.com/v1/streetview/metadata?session={session}&key={api_key}&panoId={pano_id}"
+    meta_r = requests.get(meta_url)
+    if meta_r.status_code != 200:
         return None
-
-    pano_id = data["panoIds"][0]
-
-    # Step 2: Get metadata for this panoId
-    meta_url = "https://tile.googleapis.com/v1/streetview/metadata"
-    # We append parameters to the URL string to ensure the API parses them correctly
-    full_meta_url = f"{meta_url}?session={session}&key={api_key}&panoId={pano_id}"
-
-    meta_r = requests.get(full_meta_url)
-    meta_r.raise_for_status()
+    
     meta = meta_r.json()
-
-    # Step 3: Extract flattened keys (lat, lng, heading) directly from the meta dict
     if "lat" not in meta or "lng" not in meta:
-        print(f"DEBUG: Pano ID {pano_id} found but missing coordinate keys.")
         return None
     
-    real_lat = meta.get("lat")
-    real_lng = meta.get("lng")
-    heading  = meta.get("heading", 0)
-
-    # Return the data so the main loop can start download_and_stitch
-    return pano_id, real_lat, real_lng, heading, meta
+    return meta.get("lat"), meta.get("lng"), meta.get("heading", 0)
 
 # =============================================================================
-# STEP 3 & 4: Download tiles and DO NOT STITCH — instead, save them separately as perspective crops
+# STEP 4: Download the tiles
 # =============================================================================
 def download_tiles_separately(api_key: str, session: str, pano_id: str,
                                zoom: int, output_folder: str, image_index: int,
-                               heading: float, facade_bearing: float = 90.0):
-    """
-    Downloads tiles facing the residential facade (west side of street).
-    Each tile is a gnomonic (perspective) image suitable for COLMAP PINHOLE model.
-
-    Tile column 5 at zoom 4 confirmed to face the residential building.
-    """
-    num_x = 2 ** zoom
-    num_y = 2 ** (zoom - 1)
-
-    x_range = [3, 4, 5, 6, 7]   # confirmed west-facing columns
-    y_range = range(1, 5)  # rows 1-3: upper building, skip road and sky extremes
+                               heading: float):
+    
+    x_range = [3, 4, 5, 6, 7]   # West-facing columns
+    y_range = [3]       # Skip sky/ground extremes
 
     saved = []
     for y in y_range:
@@ -146,7 +138,6 @@ def download_tiles_separately(api_key: str, session: str, pano_id: str,
             )
             r = requests.get(tile_url)
             if r.status_code != 200:
-                print(f"    [WARN] Tile {x},{y} failed: {r.status_code}")
                 continue
 
             fname = f"facade_{image_index:03d}_tile_{x}_{y}.jpg"
@@ -165,48 +156,43 @@ def download_tiles_separately(api_key: str, session: str, pano_id: str,
 
     return saved
 
-
 # =============================================================================
-# MAIN
+# MAIN LOGIC
 # =============================================================================
 def main():
     Path(OUTPUT_FOLDER).mkdir(exist_ok=True)
-
     session = get_session_token(API_KEY)
 
-    seen_panos = set()
-    image_index = 0
+    # 1. Grab start and end points from config
+    start_coord = PATH_COORDINATES[0]
+    end_coord = PATH_COORDINATES[-1]
+
+    # 2. Generate the dense list of pano IDs (~4 meters apart)
+    pano_list = get_dense_pano_ids(API_KEY, start_coord, end_coord, step_meters=4.0)
+
     all_metadata = []
+    print(f"\nDownloading tiles for {len(pano_list)} panoramas...")
 
-    print(f"\nDownloading panoramas for {len(PATH_COORDINATES)} coordinates...")
-
-    for lat, lng in PATH_COORDINATES:
-        result = get_pano_info(API_KEY, session, lat, lng)
-
-        if result is None:
-            print(f"  No panorama found at ({lat}, {lng}), skipping.")
+    # 3. Loop over the dense list of panoramas
+    for image_index, pano_id in enumerate(pano_list):
+        
+        # Get the actual GPS data for this pano
+        meta_result = get_pano_metadata_by_id(API_KEY, session, pano_id)
+        if meta_result is None:
+            print(f"  [{image_index}] Skipping {pano_id[:12]} (No metadata found)")
             continue
+            
+        real_lat, real_lng, heading = meta_result
+        print(f"  [{image_index}] Downloading {pano_id[:12]}... @ ({real_lat:.5f}, {real_lng:.5f})")
 
-        pano_id, real_lat, real_lng, heading, meta = result
-
-        if pano_id in seen_panos:
-            print(f"  Skipping duplicate panorama at ({lat}, {lng})")
-            continue
-
-        seen_panos.add(pano_id)
-
-        print(f"\n  [{image_index}] panoId={pano_id[:12]}... @ ({real_lat:.5f}, {real_lng:.5f})")
-
-        # FIX 1: pass output_folder and image_index
+        # Download the specific grid tiles
         tiles = download_tiles_separately(
-            API_KEY, session, pano_id, ZOOM_LEVEL, OUTPUT_FOLDER, image_index,
-            heading=heading,
-            facade_bearing=270.0,
+            API_KEY, session, pano_id, ZOOM_LEVEL, OUTPUT_FOLDER, image_index, heading
         )
 
         print(f"    Saved {len(tiles)} tiles")
 
-        # FIX 2: metadata per tile, not per panorama
+        # Save metadata
         for tile in tiles:
             all_metadata.append({
                 "image_name":  tile["image_name"],
@@ -220,17 +206,13 @@ def main():
                 "heading":     heading,
             })
 
-        image_index += 1
-
+    # Save to JSON
     with open(METADATA_FILE, "w") as f:
         json.dump(all_metadata, f, indent=2)
 
-    total_tiles = len(all_metadata)
     print(f"\n{'='*50}")
-    print(f"  Done! {image_index} panoramas → {total_tiles} tiles saved.")
+    print(f"  Done! {len(pano_list)} panoramas → {len(all_metadata)} tiles saved.")
     print(f"  Metadata saved to: {METADATA_FILE}")
-    print(f"\n  Next steps:")
-    print(f"    ./run_colmap.sh")
     print(f"{'='*50}")
 
 if __name__ == "__main__":
