@@ -21,21 +21,21 @@ def equirect_to_perspective(pano, fov_deg, heading_deg, pitch_deg, out_w, out_h)
     dy = -(yv - cy) / f
     dz = np.ones_like(dx)
 
-    # Rotate by heading and pitch
-    # Pitch rotation (around x-axis)
-    dy2 = dy * np.cos(pitch) - dz * np.sin(pitch)
-    dz2 = dy * np.sin(pitch) + dz * np.cos(pitch)
-    # Heading rotation (around y-axis)
-    dx3 = dx * np.cos(heading) + dz2 * np.sin(heading)
-    dz3 = -dx * np.sin(heading) + dz2 * np.cos(heading)
+    # 1. Heading (yaw) — rotate around Y axis
+    dx2 =  dx * np.cos(heading) + dz * np.sin(heading)
+    dz2 = -dx * np.sin(heading) + dz * np.cos(heading)
+
+    # 2. Pitch — rotate around X axis  
+    dy3 =  dy * np.cos(pitch) - dz2 * np.sin(pitch)
+    dz3 =  dy * np.sin(pitch) + dz2 * np.cos(pitch)
+    # dx2 unchanged
 
     # Normalize
-    norm = np.sqrt(dx3**2 + dy2**2 + dz3**2)
-    dx3 /= norm; dy2 /= norm; dz3 /= norm
+    norm = np.sqrt(dx2**2 + dy3**2 + dz3**2)
+    dx2 /= norm;  dy3 /= norm;  dz3 /= norm
 
-    # To spherical
-    lon = np.arctan2(dx3, dz3)          # -pi to pi
-    lat = np.arcsin(np.clip(dy2, -1, 1)) # -pi/2 to pi/2
+    lon = np.arctan2(dx2, dz3)
+    lat = np.arcsin(np.clip(dy3, -1, 1))
 
     # To pixel coords in equirectangular
     map_x = ((lon / np.pi + 1) / 2 * w).astype(np.float32)
@@ -46,7 +46,7 @@ def equirect_to_perspective(pano, fov_deg, heading_deg, pitch_deg, out_w, out_h)
 # --- Config ---
 INPUT_DIR  = "street_images"
 OUTPUT_DIR = "perspective_crops"
-META_FILE  = "street_images/panorama_metadata.json"
+META_FILE  = "panorama_metadata.json"
 FOV        = 90       # degrees — wider = more overlap, lower quality
 PITCH      = 0        # degrees down from horizon (try -5 to aim slightly up at facade)
 OUT_W      = 2048
@@ -64,10 +64,12 @@ for meta in metas:
         print(f"[SKIP] {img_path} not found")
         continue
 
+    current_heading = meta.get("car_heading", meta.get("heading", 0))
+    
     crop = equirect_to_perspective(
         pano,
         fov_deg=FOV,
-        heading_deg=meta["heading"],
+        heading_deg=current_heading,
         pitch_deg=PITCH,
         out_w=OUT_W,
         out_h=OUT_H,
