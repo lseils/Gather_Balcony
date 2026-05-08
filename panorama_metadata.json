@@ -1,79 +1,39 @@
 [
   {
-    "image_name": "facade_perspective_000.jpg",
+    "image_name": "pano_000.jpg",
     "pano_index": 0,
-    "pano_id": "w0mWic_nByqDPtbO4zxsoQ",
-    "lat": 33.76429268885186,
-    "lng": -84.38208141199576,
-    "car_heading": 20.091871
-  },
-  {
-    "image_name": "facade_perspective_001.jpg",
-    "pano_index": 1,
-    "pano_id": "6Y7vZ7LDYpU-Goo59JPDmQ",
-    "lat": 33.76439075552515,
-    "lng": -84.38208157237978,
-    "car_heading": 3.4501007
-  },
-  {
-    "image_name": "facade_perspective_002.jpg",
-    "pano_index": 2,
-    "pano_id": "6OV8hu_cxy_wljahpoNZLA",
-    "lat": 33.7644907350394,
-    "lng": -84.3820770816271,
-    "car_heading": 1.3979982
-  },
-  {
-    "image_name": "facade_perspective_003.jpg",
-    "pano_index": 3,
-    "pano_id": "sjOvk36YHCWelOlBUvjllg",
-    "lat": 33.764586229086696,
-    "lng": -84.3820729918342,
-    "car_heading": 0.95888984
-  },
-  {
-    "image_name": "facade_perspective_004.jpg",
-    "pano_index": 4,
-    "pano_id": "RoUIqGwSX81Qn3HfQbtKHg",
-    "lat": 33.76467867014485,
-    "lng": -84.38207090684163,
-    "car_heading": 0.78536683
-  },
-  {
-    "image_name": "facade_perspective_005.jpg",
-    "pano_index": 5,
     "pano_id": "wKInQ9XkByl_YP_ypqwVig",
     "lat": 33.76477068989027,
     "lng": -84.38206890204101,
     "car_heading": 0.5400253
   },
   {
-    "image_name": "facade_perspective_006.jpg",
-    "pano_index": 6,
+    "image_name": "pano_001.jpg",
+    "pano_index": 1,
     "pano_id": "_jCTn4Z0ZWLIpm_nZOvP6w",
     "lat": 33.76486236965254,
     "lng": -84.38206689724032,
     "car_heading": 0.7201503
   },
   {
-    "image_name": "facade_perspective_007.jpg",
-    "pano_index": 7,
+    "image_name": "pano_002.jpg",
+    "pano_index": 2,
     "pano_id": "k9o58gxKqmMQus_20O0L_Q",
     "lat": 33.76495362445974,
     "lng": -84.38206489243957,
     "car_heading": 0.41507307
   },
   {
-    "image_name": "facade_perspective_008.jpg",
-    "pano_index": 8,
+    "image_name": "pano_003.jpg",
+    "pano_index": 3,
     "pano_id": "AENIkZUN3CsrzUUI2bG-bw",
     "lat": 33.76503995439782,
     "lng": -84.38206296783078,
     "car_heading": 0.86337036
   },
   {
-    "image_name": "facade_perspective_009.jpg",
-    "pano_index": 9,
+    "image_name": "pano_004.jpg",
+    "pano_index": 4,
     "pano_id": "4OvuRTT9h0RXGbpZJT_GTQ",
     "lat": 33.765125689446364,
     "lng": -84.38206104322194,

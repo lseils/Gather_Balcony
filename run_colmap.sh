@@ -9,7 +9,7 @@ set -e  # Exit on any error
 # -----------------------------------------------------------------------------
 # CONFIG — edit these to match your environment
 # -----------------------------------------------------------------------------
-IMAGE_DIR="street_images"           # Output folder from fetch_streetview.py
+IMAGE_DIR="perspective_crops"           # Output folder from fetch_streetview.py
 COLMAP_DIR="colmap_workspace"       # Where all COLMAP outputs will live
 NUM_THREADS=$(nproc)                # Use all available CPU cores
 GPU_INDEX=0                         # Set to -1 if no GPU available
@@ -54,13 +54,13 @@ echo "[1/6] Extracting features..."
 colmap feature_extractor \
     --database_path "$DB" \
     --image_path "$IMAGE_DIR" \
-    --ImageReader.single_camera 0 \
+    --ImageReader.single_camera 1 \
     --ImageReader.camera_model PINHOLE \
-    --ImageReader.camera_params "512,512,512,512" \
+    --ImageReader.camera_params "1024,1024,1024,768" \
     --SiftExtraction.use_gpu 1 \
     --SiftExtraction.gpu_index $GPU_INDEX \
     --SiftExtraction.num_threads $NUM_THREADS \
-    --SiftExtraction.max_image_size 1024 \
+    --SiftExtraction.max_image_size 2048 \
     --SiftExtraction.max_num_features 8192
 
 # =============================================================================
@@ -85,17 +85,16 @@ colmap exhaustive_matcher \
 echo ""
 echo "[3/6] Running sparse reconstruction (SfM)..."
 
-echo "[3/6] Running sparse reconstruction (SfM)..."
 colmap mapper \
     --database_path "$DB" \
     --image_path "$IMAGE_DIR" \
     --output_path "$SPARSE_DIR" \
     --Mapper.num_threads $NUM_THREADS \
-    --Mapper.tri_min_angle 0.5 \
-    --Mapper.tri_complete_max_reproj_error 8 \
-    --Mapper.init_min_num_inliers 5 \
-    --Mapper.abs_pose_min_num_inliers 5 \
-    --Mapper.abs_pose_min_inlier_ratio 0.1 \
+    --Mapper.tri_min_angle 1.5 \
+    --Mapper.tri_complete_max_reproj_error 4 \
+    --Mapper.init_min_num_inliers 15 \
+    --Mapper.abs_pose_min_num_inliers 12 \
+    --Mapper.abs_pose_min_inlier_ratio 0.25 \
     --Mapper.max_reg_trials 5 \
     --Mapper.multiple_models 0 \
     --Mapper.init_num_trials 1000
@@ -122,7 +121,7 @@ colmap image_undistorter \
     --input_path "$SPARSE_DIR/0" \
     --output_path "$DENSE_DIR" \
     --output_type COLMAP \
-    --max_image_size 2000
+    --max_image_size 2048
 
 echo ""
 echo "[5/6] Running PatchMatch stereo (this is the slow step)..."
@@ -147,10 +146,10 @@ colmap stereo_fusion \
     --input_type geometric \
     --output_path "$DENSE_DIR/fused.ply" \
     --StereoFusion.num_threads $NUM_THREADS \
-    --StereoFusion.min_num_pixels 1 \
-    --StereoFusion.max_reproj_error 4 \
-    --StereoFusion.max_depth_error 0.05 \
-    --StereoFusion.max_normal_error 30
+    --StereoFusion.min_num_pixels 3 \
+    --StereoFusion.max_reproj_error 2 \
+    --StereoFusion.max_depth_error 0.02 \
+    --StereoFusion.max_normal_error 20
 
 
 echo "[OK] Dense point cloud: $DENSE_DIR/fused.ply"
