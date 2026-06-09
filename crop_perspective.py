@@ -46,7 +46,7 @@ def equirect_to_perspective(pano, fov_deg, heading_deg, pitch_deg, out_w, out_h)
 # --- Config ---
 INPUT_DIR  = "street_images"
 OUTPUT_DIR = "perspective_crops"
-META_FILE  = "street_images/panorama_metadata.json"
+META_FILE  = "panorama_metadata.json"
 FOV        = 90       # degrees — wider = more overlap, lower quality
 PITCH      = 0        # degrees down from horizon (try -5 to aim slightly up at facade)
 OUT_W      = 2048

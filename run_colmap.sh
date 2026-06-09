@@ -12,7 +12,7 @@ set -e  # Exit on any error
 IMAGE_DIR="street_images"           # Output folder from fetch_streetview.py
 COLMAP_DIR="colmap_workspace"       # Where all COLMAP outputs will live
 NUM_THREADS=$(nproc)                # Use all available CPU cores
-GPU_INDEX=0                         # Set to -1 if no GPU available
+GPU_INDEX=0                     # Set to -1 if no GPU available
 
 # -----------------------------------------------------------------------------
 # DERIVED PATHS (don't edit)
