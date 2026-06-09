@@ -54,9 +54,8 @@ echo "[1/6] Extracting features..."
 colmap feature_extractor \
     --database_path "$DB" \
     --image_path "$IMAGE_DIR" \
-    --ImageReader.single_camera 1 \
+    --ImageReader.single_camera 0 \
     --ImageReader.camera_model PINHOLE \
-    --ImageReader.camera_params "1024,1024,1024,768" \
     --SiftExtraction.use_gpu 1 \
     --SiftExtraction.gpu_index $GPU_INDEX \
     --SiftExtraction.num_threads $NUM_THREADS \

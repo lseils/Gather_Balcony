@@ -3,13 +3,18 @@
 crop_perspective.py
 --------------------
 Reads raw equirectangular panoramas saved by fetch_streetview_tiles.py and
-extracts a rectilinear perspective crop looking directly at the building facade.
+extracts three rectilinear perspective crops per panorama:
+  - center: looking directly at the building facade
+  - left:   30° left of the facade
+  - right:  30° right of the facade
 
 Correct rotation order: yaw (heading) first, then pitch.
 The crop heading is TARGET_BEARING - car_heading, NOT car_heading directly.
 
 Outputs:
-  perspective_crops/pano_000_persp.jpg   ← ready for COLMAP
+  perspective_crops/pano_000_center.jpg  ← facing facade directly
+  perspective_crops/pano_000_left.jpg    ← 30° left of facade
+  perspective_crops/pano_000_right.jpg   ← 30° right of facade
 """
 
 import os
@@ -27,12 +32,20 @@ META_FILE   = "panorama_metadata.json"
 
 # Compass bearing the building faces FROM the street.
 # West = 270, East = 90, North = 0, South = 180.
-TARGET_BEARING = 250.0   
+TARGET_BEARING = 250.0
 
-FOV_DEG  = 90      # horizontal FOV in degrees. 90° gives strong overlap at 4m spacing.
-PITCH_DEG = 16.0    # degrees UP from horizon. Positive = tilt up toward upper floors.
-OUT_W    = 2048    # output width  (pixels)
-OUT_H    = 1536   # output height (pixels)
+# Offsets (degrees) from TARGET_BEARING for the three crops.
+# 0° = center, -30° = left, +30° = right.
+CROP_OFFSETS = {
+    "left":   -30.0,
+    "center":   0.0,
+    "right":  +30.0,
+}
+
+FOV_DEG   = 90     # horizontal FOV in degrees. 90° gives strong overlap at 4m spacing.
+PITCH_DEG = 16.0   # degrees UP from horizon. Positive = tilt up toward upper floors.
+OUT_W     = 2048   # output width  (pixels)
+OUT_H     = 1536   # output height (pixels)
 
 
 # =============================================================================
@@ -82,14 +95,12 @@ def equirect_to_perspective(pano: np.ndarray,
     rz =  np.ones_like(rx)
 
     # --- Rotation 1: Yaw around the Y axis ---
-    # (rotate the camera left/right to face the building)
     rx2 =  rx * np.cos(yaw) + rz * np.sin(yaw)
-    ry2 =  ry                                       # unchanged by yaw
+    ry2 =  ry
     rz2 = -rx * np.sin(yaw) + rz * np.cos(yaw)
 
     # --- Rotation 2: Pitch around the X axis ---
-    # (tilt the camera up/down)
-    rx3 =  rx2                                      # unchanged by pitch
+    rx3 =  rx2
     ry3 =  ry2 * np.cos(pitch) - rz2 * np.sin(pitch)
     rz3 =  ry2 * np.sin(pitch) + rz2 * np.cos(pitch)
 
@@ -124,6 +135,7 @@ def main():
         metas = json.load(f)
 
     print(f"Target bearing (building direction): {TARGET_BEARING}°")
+    print(f"Crop offsets: { {k: f'{TARGET_BEARING + v}°' for k, v in CROP_OFFSETS.items()} }")
     print(f"FOV: {FOV_DEG}°  |  Pitch: {PITCH_DEG}°  |  Output: {OUT_W}×{OUT_H}\n")
 
     ok_count = 0
@@ -139,32 +151,37 @@ def main():
         print(f"[{meta['pano_index']:03d}] {meta['image_name']}  "
               f"({pano_w}×{pano_h})  car_heading={meta['car_heading']:.1f}°")
 
-        # --- Key fix: look at the BUILDING, not down the street ---
-        # yaw_deg is how far we rotate from the pano's "forward" direction
-        # (which is car_heading) to face TARGET_BEARING.
-        yaw_deg = TARGET_BEARING - meta["car_heading"]
+        for crop_name, bearing_offset in CROP_OFFSETS.items():
+            # Rotate from pano's forward direction to face TARGET_BEARING + offset
+            yaw_deg = (TARGET_BEARING + bearing_offset) - meta["car_heading"]
 
-        # Normalize to [-180, 180] so cv2.remap doesn't wrap the wrong way
-        yaw_deg = (yaw_deg + 180.0) % 360.0 - 180.0
+            # Normalize to [-180, 180]
+            yaw_deg = (yaw_deg + 180.0) % 360.0 - 180.0
 
-        print(f"         yaw to facade: {yaw_deg:.1f}°")
+            print(f"    [{crop_name:6s}] bearing={TARGET_BEARING + bearing_offset:.1f}°  "
+                  f"yaw={yaw_deg:.1f}°")
 
-        crop = equirect_to_perspective(
-            pano,
-            fov_deg=FOV_DEG,
-            yaw_deg=yaw_deg,
-            pitch_deg=PITCH_DEG,
-            out_w=OUT_W,
-            out_h=OUT_H,
-        )
+            crop = equirect_to_perspective(
+                pano,
+                fov_deg=FOV_DEG,
+                yaw_deg=yaw_deg,
+                pitch_deg=PITCH_DEG,
+                out_w=OUT_W,
+                out_h=OUT_H,
+            )
 
-        out_name = meta["image_name"].replace(".jpg", "_persp.jpg")
-        out_path = os.path.join(OUTPUT_DIR, out_name)
-        cv2.imwrite(out_path, crop, [cv2.IMWRITE_JPEG_QUALITY, 95])
-        ok_count += 1
+            base_name = meta["image_name"].replace(".jpg", "")
+            out_name  = f"{base_name}_{crop_name}.jpg"
+            out_path  = os.path.join(OUTPUT_DIR, out_name)
+            cv2.imwrite(out_path, crop, [cv2.IMWRITE_JPEG_QUALITY, 95])
+            ok_count += 1
 
-    print(f"\n{'='*52}")
-    print(f"  Done! {ok_count}/{len(metas)} crops saved to '{OUTPUT_DIR}/'")
+        print()
+
+    total_panos = len(metas)
+    print(f"{'='*52}")
+    print(f"  Done! {ok_count} crops from {total_panos} panoramas saved to '{OUTPUT_DIR}/'")
+    print(f"  ({total_panos} × {len(CROP_OFFSETS)} crops = {total_panos * len(CROP_OFFSETS)} total)")
     print(f"  Next step: point run_colmap.sh at '{OUTPUT_DIR}/'")
     print(f"{'='*52}")
 
