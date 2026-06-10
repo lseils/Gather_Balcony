@@ -15,6 +15,8 @@ __pycache__/
 # Ignore the downloaded images and 3D outputs (optional, but recommended)
 street_images/
 3d_outputs/
+perspective_crops/
+combined_detections/
 
 # Personal Notes
 Notes
