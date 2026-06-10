@@ -7,14 +7,16 @@ Cleans up COLMAP output mesh/point cloud for CAD/BIM import.
 Steps:
   1. Load fused.ply point cloud
   2. Remove statistical outliers
-  3. Estimate normals (needed for meshing / BIM tools)
-  4. Downsample to manageable size
-  5. Save cleaned cloud + export mesh as .obj (Revit/AutoCAD friendly)
+  3. RANSAC plane fitting → isolate building facade
+  4. Estimate normals (needed for meshing / BIM tools)
+  5. Downsample to manageable size
+  6. Poisson reconstruction → export as .ply and .obj
 
 Usage:
   pip install open3d
   python open3d_postprocess.py
   python open3d_postprocess.py --input colmap_workspace/dense/fused.ply --voxel 0.05
+  python open3d_postprocess.py --plane_thickness 0.5   # loosen if facade is too sparse
 """
 
 import argparse
@@ -31,50 +33,91 @@ import numpy as np
 
 
 def load_point_cloud(path: str) -> o3d.geometry.PointCloud:
-    print(f"[1/5] Loading point cloud: {path}")
+    print(f"[1/6] Loading point cloud: {path}")
     pcd = o3d.io.read_point_cloud(path)
     print(f"      {len(pcd.points):,} points loaded")
     return pcd
 
 
 def remove_outliers(pcd: o3d.geometry.PointCloud) -> o3d.geometry.PointCloud:
-    print("[2/5] Removing statistical outliers...")
-    # nb_neighbors: how many neighbors to consider
-    # std_ratio: lower = more aggressive removal
+    print("[2/6] Removing statistical outliers...")
     cleaned, ind = pcd.remove_statistical_outlier(nb_neighbors=20, std_ratio=2.0)
     removed = len(pcd.points) - len(cleaned.points)
     print(f"      Removed {removed:,} outlier points ({removed/len(pcd.points)*100:.1f}%)")
     return cleaned
 
 
+def extract_facade_plane(pcd: o3d.geometry.PointCloud,
+                          plane_thickness: float) -> o3d.geometry.PointCloud:
+    """
+    Use RANSAC to find the dominant plane (the building facade), then keep
+    only points within `plane_thickness` meters of that plane.
+    Iterates up to 3 times to find the largest planar surface.
+    """
+    print(f"[3/6] RANSAC plane fitting (thickness=±{plane_thickness}m)...")
+
+    best_inliers = None
+    best_equation = None
+    remaining = pcd
+
+    # Try up to 3 planes, keep the one with the most inliers
+    for i in range(3):
+        plane_model, inliers = remaining.segment_plane(
+            distance_threshold=plane_thickness,
+            ransac_n=3,
+            num_iterations=1000
+        )
+        if best_inliers is None or len(inliers) > len(best_inliers):
+            best_inliers = inliers
+            best_equation = plane_model
+            # Remove this plane's inliers and try again on what's left
+            remaining = remaining.select_by_index(inliers, invert=True)
+
+    a, b, c, d = best_equation
+    print(f"      Dominant plane equation: {a:.3f}x + {b:.3f}y + {c:.3f}z + {d:.3f} = 0")
+
+    facade = pcd.select_by_index(best_inliers)
+    noise  = pcd.select_by_index(best_inliers, invert=True)
+
+    kept_pct = len(facade.points) / len(pcd.points) * 100
+    print(f"      Kept {len(facade.points):,} facade points ({kept_pct:.1f}%)")
+    print(f"      Discarded {len(noise.points):,} non-facade points")
+
+    if len(facade.points) < 500:
+        print("      [WARN] Very few facade points — try increasing --plane_thickness")
+
+    return facade
+
+
 def voxel_downsample(pcd: o3d.geometry.PointCloud, voxel_size: float) -> o3d.geometry.PointCloud:
-    print(f"[3/5] Voxel downsampling (voxel_size={voxel_size}m)...")
+    print(f"[4/6] Voxel downsampling (voxel_size={voxel_size}m)...")
     downsampled = pcd.voxel_down_sample(voxel_size=voxel_size)
     print(f"      {len(downsampled.points):,} points after downsampling")
     return downsampled
 
 
 def estimate_normals(pcd: o3d.geometry.PointCloud, voxel_size: float) -> o3d.geometry.PointCloud:
-    print("[4/5] Estimating surface normals...")
+    print("[5/6] Estimating surface normals...")
     radius = voxel_size * 5
     pcd.estimate_normals(
         search_param=o3d.geometry.KDTreeSearchParamHybrid(radius=radius, max_nn=30)
     )
-    # Orient normals consistently (important for meshing)
+    # Orient all normals to point in the same direction (toward the camera / street)
     pcd.orient_normals_consistent_tangent_plane(k=15)
     return pcd
 
 
-def reconstruct_and_export(pcd: o3d.geometry.PointCloud, output_dir: Path, voxel_size: float):
-    print("[5/5] Reconstructing mesh & exporting...")
+def reconstruct_and_export(pcd: o3d.geometry.PointCloud,
+                            output_dir: Path,
+                            voxel_size: float):
+    print("[6/6] Reconstructing mesh & exporting...")
 
-    # --- Poisson reconstruction ---
     print("      Running Poisson surface reconstruction...")
     mesh, densities = o3d.geometry.TriangleMesh.create_from_point_cloud_poisson(
         pcd, depth=9, width=0, scale=1.1, linear_fit=False
     )
 
-    # Trim low-density vertices (removes floating artifacts)
+    # Trim low-density vertices (removes floating artifacts at mesh boundary)
     density_threshold = np.quantile(densities, 0.05)
     vertices_to_remove = densities < density_threshold
     mesh.remove_vertices_by_mask(vertices_to_remove)
@@ -95,12 +138,11 @@ def reconstruct_and_export(pcd: o3d.geometry.PointCloud, output_dir: Path, voxel
     o3d.io.write_triangle_mesh(str(obj_out), mesh)
     print(f"      Saved: {obj_out}  ← import this into Revit/AutoCAD")
 
-    # Print mesh stats
     print(f"\n  Mesh stats:")
     print(f"    Vertices : {len(mesh.vertices):,}")
     print(f"    Triangles: {len(mesh.triangles):,}")
     is_watertight = mesh.is_watertight()
-    print(f"    Watertight: {'Yes ✓' if is_watertight else 'No (normal for facade scans)'}")
+    print(f"    Watertight: {'Yes' if is_watertight else 'No (normal for facade scans)'}")
 
     return mesh
 
@@ -122,7 +164,13 @@ def main():
         type=float,
         default=0.05,
         help="Voxel size in meters for downsampling (default: 0.05 = 5cm)"
-             " — increase if mesh is too dense for your BIM tool"
+    )
+    parser.add_argument(
+        "--plane_thickness",
+        type=float,
+        default=0.3,
+        help="Max distance from facade plane to keep points, in meters (default: 0.3). "
+             "Increase to 0.5-1.0 if facade is too sparse after extraction."
     )
     args = parser.parse_args()
 
@@ -142,6 +190,7 @@ def main():
 
     pcd = load_point_cloud(str(input_path))
     pcd = remove_outliers(pcd)
+    pcd = extract_facade_plane(pcd, args.plane_thickness)
     pcd = voxel_downsample(pcd, args.voxel)
     pcd = estimate_normals(pcd, args.voxel)
     reconstruct_and_export(pcd, output_dir, args.voxel)
