@@ -71,6 +71,9 @@ def load_models():
 # DEPTH ESTIMATION
 # =============================================================================
 def estimate_depth(depth_pipe, image_path: str) -> np.ndarray:
+    """
+    Returns relative depth map, normalized to 0-1 (higher = closer).
+    """
     img = Image.open(image_path).convert("RGB")
     result = depth_pipe(img)
     depth = np.array(result["depth"], dtype=np.float32)
@@ -171,13 +174,12 @@ def main():
             source=image_path,
             imgsz=args.imgsz,
             conf=args.conf,
-            iou=0.4,
             verbose=False,
         )
         result = results[0]
         names  = result.names
 
-        # --- Depth estimation ---
+        # --- Depth estimation (relative, normalized 0-1) ---
         depth = estimate_depth(depth_pipe, image_path)
         orig  = cv2.imread(image_path)
         oh, ow = orig.shape[:2]
@@ -204,8 +206,8 @@ def main():
                 "median_depth": round(median_depth, 3),
             })
 
-        print(f"  {len(detections)} detection(s): "
-              f"{[d['label'] for d in detections]}")
+        det_summary = [(d['label'], d['median_depth']) for d in detections]
+        print(f"  {len(detections)} detection(s): {det_summary}")
         total_detections += len(detections)
 
         # --- Annotate and save ---
